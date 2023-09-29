@@ -1,0 +1,19 @@
+.banner {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center; /* Aligne les element au milieu*/
+}
+
+.chibi img {
+    width: 200px;
+    height: 200px;
+}
+
+.carroussel img {
+    width: auto;
+    height: 200px;
+}

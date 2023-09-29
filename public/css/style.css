@@ -1,0 +1,18 @@
+body {
+    color: #AD0011;
+}
+
+.intitule_page h3 {
+    color: #AD0011;
+    font-family: 'Onest', sans-serif;
+    font-size: 50px;
+    text-align: center;
+    margin: 20px;
+}
+
+.trait_x { 
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    border-top: solid 2px #AD0011;
+}

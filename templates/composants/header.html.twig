@@ -1,5 +1,5 @@
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{asset('css/header.css')}}">
+    <link rel="stylesheet" href="{{asset('css/composants/header.css')}}">
 {% endblock %}
 
 
@@ -15,15 +15,15 @@
             </div>
             <div class="div2">
                 <div class="navBar">
-                    <a href="#">Accueil</a>
+                    <a href="{{ path('app_accueil')}}">Accueil</a>
                     <a href="{{ path('app_shop')}}">Boutique</a>
-                    <a href="#">Contact</a>{# bloquer l accès si utilisateur non connecté #}
+                    <a href="{{ path('app_contact')}}">Contact</a>{# bloquer l accès si utilisateur non connecté #}
                 </div>
             </div>
 
             <!-- Partie input de recherche -->
             <form class="div3">
-                <div class="searchBar" >
+                <div class="searchBar">
                     <img src="{{ asset('images/icones/search.png') }}" alt="" width="20px" height="20px"> 
                     <input type="text" placeholder="produit, licence... ">
                 </div>
@@ -51,6 +51,7 @@
         </div>
 
     </nav>
-
-    <div class="trait_x_header"></div> <!-- trait de séparation -->
+    
+    <!-- trait de séparation -->
+    <div class="trait_x"></div> 
 </header>

@@ -10,6 +10,8 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300&display=swap" rel="stylesheet">
 
+        {# Import du style valble sur toute les pages (ex: titre/texte) pour que se soit homogène #}
+        <link rel="stylesheet" href="{{asset('css/style.css')}}">
 
         {% block stylesheets %} {% endblock %}
 
@@ -21,6 +23,9 @@
     <body>
 
         {% include './composants/header.html.twig' %} {# Inclus le header sur chaque page #}
+
+        {% include "./composants/banniere.html.twig" %}
+
 
         {% block body %} {% endblock %}
 
