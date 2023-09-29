@@ -1,0 +1,8 @@
+.mozaic_produits {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    margin: 5% 10% 5% 10%; /* haut - droit - bas - gauche */
+}

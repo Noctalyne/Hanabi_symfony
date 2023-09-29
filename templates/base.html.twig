@@ -3,14 +3,30 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+        {# Change l icone de l'onglet #}{# <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>"> #}
+        
+        {# Style de police -- API Google #}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300&display=swap" rel="stylesheet">
 
-        {% block javascripts %}
-        {% endblock %}
+
+        {% block stylesheets %} {% endblock %}
+
+        {% block javascripts %} {% endblock %}
+
     </head>
+
+
     <body>
-        {% block body %}{% endblock %}
+
+        {% include './composants/header.html.twig' %} {# Inclus le header sur chaque page #}
+
+        {% block body %} {% endblock %}
+
+        
+        {% include './composants/footer.html.twig' %}
+
     </body>
+
 </html>
