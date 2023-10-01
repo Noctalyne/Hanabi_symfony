@@ -1,4 +1,4 @@
-.formulaireRechercheProduit {
+/* .formulaireRechercheProduit {
     margin-right: 10%;
     margin-left: 10%;
     text-align: center;
@@ -7,4 +7,19 @@
 .carte_form {
     border: solid #AD0011 1px;
     margin: 10px;
+    padding: 50px;
+} */
+
+
+
+/* CHECK BOX TYPE PRODUITS RECHERCHER */
+
+/* .type_of_checkbox {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
 }
+
+.formulaire_contact {
+    padding: 50px;
+} */
