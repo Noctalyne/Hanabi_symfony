@@ -1,111 +1,74 @@
 {% block stylesheets %}
-	<link rel="stylesheet" href="{{ asset('css/contact/formulaireContact.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/contact/formulaire_contact.css') }}">
 {% endblock %}
 
-<div>
-	<section class="formulaireRechercheProduit">
+
+<section>
+	<div
+		class="formulaireRechercheProduit">
 
 		<!--En-tête-->
-		<div class="">
+		<div>
 			<h1>Formulaire de demande</h1>
-			<p>
-				Ici vous pouvez effectuer une demande de produit spécifique.
+			<p>Ici vous pouvez effectuer une demande de produit spécifique.
+				<br>Votre demande devras être ensuite accepter par le vendeur.
 			</p>
-			<p>
-				Votre demande devras être ensuite accepter par le vendeur.
-			</p>
+			{# <br>Vous devez être connecter pour envoyer une demande #}
+
+
 		</div>
 
 		<!--div principal ici qu'on modifie la largeur du formulaire-->
-		<div class="">
-			<div class="">
-				<h4 class="">
-					Vos informations
-				</h4>
-				<p class="">
-					Connectez vous pour pouvoir envoyer une demande
 
-				</p>
-				<!-- ici le lien renvoie à l'ouverture du canvas de connexion (cf icone conexion dans le header)-->
-			<!-- Informations utilisateurs -->
-				{# <div class="">
-												                    																																																																																				
-												                    																																																																																									<div class="imputForm">
-												                    																																																																																										<div class="imput_l">
-												                    																																																																																				                            <label>Nom</label>
-												                    																																																																																											<input type="text" class="" placeholder="Entrez votre nom..">							
-												                    																																																																																										</div>
-												                    																																																																																				
-												                    																																																																																										<div class="imput_r">
-												                    																																																																																											<label>Prénom</label>                        
-												                    																																																																																											<input type="text" class=" " placeholder="Entrez votre prénom..">
-												                    																																																																																										</div>
-												                    																																																																																									</div>
-												                    																																																																																				
-												                    																																																																																				                    <div class="imputForm"> 
-												                    																																																																																				                        <div class="imput_l">
-												                    																																																																																				                            <label for="mailFloatingInput">Adresse mail</label>
-												                    																																																																																				                            <input type="email" class="form-control" id="mailFloatingInput" placeholder="Entrez votre adresse mail">
-												                    																																																																																				                        </div>
-												                    																																																																																				
-												                    																																																																																				                        <div class="imput_r">
-												                    																																																																																				                            <label for="mailFloatingInput">Confirmer mail</label>                        
-												                    																																																																																				                            <input type="email" class="form-control" id="mailFloatingInput" placeholder="Entrez votre adresse mail">
-												                    																																																																																				                        </div>
-												                    																																																																																				                    </div>
-												                    																																																																																				
-												                    																																																																																								</div> #}
-			</div>
-			<div class="carte_form">
-				<h5 class="">
-					Quelques précisions sur le produit recherché
-				</h5>
-				<!-- Information produits rechercher -->
-				{# </div> #}
-				<form class="formulaire_contact" >
-					<div class="choice_type_of_product">
-						<p>
-							Choisissez le type de produit voulue :
 
-						</p>
-						<div class="type_of_checkbox">
+		<div class="carte_form">
+
+			<h3>Vos informations</h3>
+			<p>Connectez vous pour pouvoir envoyer une demande</p>
+
+			<h3>Quelques précisions sur le produit recherché</h3>
+
+			<!-- Information produits rechercher -->
+			<form class="formulaire_contact">
+
+				<div class="choice_product">
+
+					<p>Choisissez le type de produit voulue :</p>
+
+					<div class="type_of_checkbox">
+						
+						<div>
 							<input type="checkbox" value="Figurine" id="Figurine">
-							<label for="Figurine">
-								Figurine
-							</label>
+							<label for="Figurine">Figurine</label>
+						</div>
+						<div>
 							<input type="checkbox" value="" id="Manga">
-							<label for="Manga">
-								Manga
+							<label for="Manga">Manga</label>
+						</div>
 
-							</label>
+						<div>
 							<input type="checkbox" value="" id="Autres">
-							<label for="Autres">
-								Autres *
-
-							</label>
+							<label for="Autres">Autres *</label>
 						</div>
 					</div>
-					<div>
-						<label for="choiceOtherItem" class="">
-							* Autres (préciser) :
-						</label>
-						<input type="text" class="" id="choiceOtherItem" placeholder="Goodies, Peluches..."></div>
+
+				</div>
+
+				<div class="precision">
+					<label for="choiceOtherItem" class="">* Autres (préciser) :</label>
+					<input type="text" class="" id="choiceOtherItem" placeholder="Goodies, Peluches...">
+				</div>
 
 
-					<div class="precision">
-						<label for="" class="">
-							Veuillez préciser votre recherche :
-						</label>
-						<textarea class="" name="" maxlength="300" wrap="soft" rows="6" placeholder="Apportez des précision a votre demande (300 caractères max)"></textarea>
-					</div>
+				<div class="precision_textarea">
+					<label for="">Veuillez préciser votre recherche :</label>
+					<textarea name="" maxlength="300" wrap="soft" rows="6" placeholder="Apportez des précision a votre demande (300 caractères max)"></textarea>
+				</div>
 
-					<button type="submit" class="envoie_formulaire">
-						Envoyer le formulaire
-					</button>
+				<button type="submit" class="">Envoyer le formulaire</button>
 
-				</form>
+			</form>
 
-			</div>
 		</div>
 	</div>
-</div></section></div>
+</section>
