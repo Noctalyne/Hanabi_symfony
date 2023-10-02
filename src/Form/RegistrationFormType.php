@@ -17,7 +17,14 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+
+        /* Ici avec add on ajouter les donnée demander 
+            au formulaire en back --> on afficher sur le twig les(register) 
+            les info qu'on veux recevoir*/
+
             ->add('email')
+
+            ->add('username')
             
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,

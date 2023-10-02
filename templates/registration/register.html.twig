@@ -8,7 +8,14 @@
 
 	{{ form_errors(registrationForm) }}
 
-	{{ form_start(registrationForm) }}
+	
+	{{ form_start(registrationForm) }}{# Debut du formulaire #}
+
+	{# Chaque for_row represente un imput et sont label #}
+
+	{{ form_row(registrationForm.username, {
+        label: 'username'
+    }) }}
 
 	{{ form_row(registrationForm.email, {
         label: 'Email'
@@ -22,5 +29,5 @@
 
 	<button type="submit" class="btn">Inscription</button>
 
-	{{ form_end(registrationForm) }}
+	{{ form_end(registrationForm) }}{# FIN DU FORMULAIRE #}
 {% endblock %}

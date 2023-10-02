@@ -34,9 +34,29 @@
             {# Si utilisateur non connecter #}
 
             <div class="div4">
-                <form method="Post" action="#">
-                    <button type="submit" class="login" > Se connecter </button>
-                </form>
+                {# <a href="{{ path('app_login') }}">Se Connecter</a> #}
+                {# <a href="{{ path('app_register') }}">s'inscrire</a>  #}
+
+            {% if app.user %}
+                <div class="user-info">
+                    <p>{{ app.user.username }}</p>
+                    <img src={{ app.user.image }}  alt="Avatar" class="avatar" />
+
+                    <form method="post" action="{{ path('app_logout') }}">
+                        <button type="submit" class="logout">Déconnexion</button>
+                    </form>
+                </div>
+
+            {% else %}
+                {# <form method="post" action="{{ path('app_login') }}">
+                    <button type="submit" class="login">Se connecter</button>
+                </form> #}
+               
+                <a href="{{ path('app_login') }}">Se Connecter</a>
+
+                <a href="{{ path('app_register') }}">s'inscrire</a> 
+
+            {% endif %}
             </div>
 
 
