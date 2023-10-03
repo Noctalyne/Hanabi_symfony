@@ -27,7 +27,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, name: "user_email", unique: true)] /* le name donne le nom de la colonne */
     private ?string $email = null;
     
-    // Création de la colonne password(codé de base)
+    // Création de la colonne identifiant
     #[ORM\Column(name: "username")] /* le name donne le nom de la colonne */
     private ?string $username = null;
 
@@ -101,6 +101,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return (string) $this->email; // ici l user s identifier avec email voir si possible de mettre email + username
+        // return (string) $this->username;
     }
 
 
