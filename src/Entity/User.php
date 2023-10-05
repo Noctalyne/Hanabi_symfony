@@ -216,11 +216,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
    }
 
    //  gère le numéro d'adresse
-   public function getNumAdresse(): ?string
+   public function getNum_Adresse(): ?string
    {
        return $this->num_adresse;
    }
-   public function setNumAdresse(string $num_adresse): static
+   public function setNum_Adresse(string $num_adresse): static
    {
        $this->num_adresse = $num_adresse;
 
@@ -228,11 +228,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
    }
 
    //  gère le rue de l adresse
-   public function getRueAdresse(): ?string
+   public function getRue_Adresse(): ?string
    {
        return $this->rue_adresse;
    }
-   public function setRueAdresse(string  $rue_adresse): static
+   public function setRue_Adresse(string  $rue_adresse): static
    {
        $this->rue_adresse = $rue_adresse;
 
@@ -240,11 +240,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
    }
 
    //  gère le complément d'adresse
-   public function getComplementAdresse(): ?string
+   public function getComplement_Adresse(): ?string
    {
        return $this->complement_adresse;
    }
-   public function setComplementAdresse(string $complement_adresse): static
+   public function setComplement_Adresse(string $complement_adresse): static
    {
        $this->complement_adresse = $complement_adresse  ;
 
@@ -252,11 +252,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
    }
 
    //  gère le ville d'adresse
-   public function getVilleAdresse(): ?string
+   public function getVille_Adresse(): ?string
    {
        return $this->ville_adresse;
    }
-   public function setVilleAdresse(string $ville_adresse ): static
+   public function setVille_Adresse(string $ville_adresse ): static
    {
        $this->ville_adresse = $ville_adresse ;
 
@@ -264,11 +264,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
    }
 
   //  gère le code postal adresse
-  public function getPostcodeAdresse (): ?string
+  public function getPostcode_Adresse (): ?string
   {
       return $this->postcode_adresse ;
   }
-  public function setPostcodeAdresse(string $postcode_adresse): static
+  public function setPostcode_Adresse(string $postcode_adresse): static
   {
       $this->postcode_adresse = $postcode_adresse;
 

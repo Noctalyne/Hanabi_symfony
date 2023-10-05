@@ -1,0 +1,62 @@
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{asset('css/composants/header.css')}}">
+{% endblock %}
+
+
+<header>
+    <!-- Barre de navigation -->
+    <nav>
+
+        <div class="header"> {# <div class="parent"> #}
+            <div class="div1">        
+                <a href="{{ path('app_accueil')}}"><img src="{{ asset('images/logo/grp_marque.png') }}" alt="#"></a>
+            </div>
+            <div class="div2">
+                <div class="navBar">
+                    <a href="{{ path('app_accueil')}}">Accueil</a>
+                    <a href="{{ path('app_shop')}}">Boutique</a>
+                    <a href="{{ path('app_contact')}}">Contact</a>{# bloquer l accès si utilisateur non connecté #}
+                    <a href="{{ path('app_admin')}}">Admin</a>                   
+                </div>
+            </div>
+
+            <!-- Partie input de recherche -->
+            <form class="div3">
+                <div class="searchBar">
+                    <img src="{{ asset('images/icones/search.png') }}" alt="" width="20px" height="20px"> 
+                    <input type="text" placeholder="produit, licence... ">
+                </div>
+            </form>
+
+            <!-- Ajouter ici les éléments apres la création des utilisateurs -->
+
+            {# Si utilisateur non connecter #}
+
+            <div class="div4">
+
+                {% if app.user %}
+                    <div class="menu_connect">
+                        <p>{{ app.user.username }}</p>
+                        {# <img src={{ app.user.image }}  alt="Avatar" class="avatar" /> #}
+                        <a href="{{path('app_profil_utilisateur')}}"> Profil </a>
+
+                        <form method="post" action="{{ path('app_logout') }}">
+                            <button type="submit" class="logout">Déconnexion</button>
+                        </form>
+                    </div>
+
+                {% else %}
+                    <div class="menu_connect">               
+                        <a href="{{ path('app_login') }}">Se connecter</a>
+                        <a href="{{ path('app_register') }}">Inscription</a>
+                    </div>
+                {% endif %}
+            </div>
+
+        </div>
+
+    </nav>
+    
+    <!-- trait de séparation -->
+    <div class="trait_x"></div> 
+</header>

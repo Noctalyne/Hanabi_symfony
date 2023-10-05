@@ -22,15 +22,22 @@
 
     <body>
 
-        {% include './composants/header.html.twig' %} {# Inclus le header sur chaque page #}
+        {% include './composants_base/header.html.twig' %} {# Inclus le header sur chaque page #}
 
-        {% include "./composants/banniere.html.twig" %}
+        {% include "./composants_base/banniere.html.twig" %}
 
 
-        {% block body %} {% endblock %}
 
+        {% block body %}
         
-        {% include './composants/footer.html.twig' %}
+        
+
+        {% endblock %}
+
+
+        <footer>
+            {% include './composants_base/footer.html.twig' %}
+        </footer>       
 
     </body>
 

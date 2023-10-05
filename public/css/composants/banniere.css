@@ -6,14 +6,27 @@
     margin-top: 20px;
     margin-bottom: 20px;
     text-align: center; /* Aligne les element au milieu*/
+    align-content: center;
+    width: 100%;
 }
 
-.chibi img {
-    width: 200px;
-    height: 200px;
+
+/* .chibi img {
+    /* width: 200px;
+    height: 200px; *
+    /* width:185px;     height: 180px;
+} */
+
+/* .carroussel img {
+    width: 90%;
+    height: 50%; 
+} */
+
+.banner img  {
+    /* width: 100%; */
+    height: 300px;
 }
 
-.carroussel img {
-    width: auto;
-    height: 200px;
+.banner p {
+    margin: 1px;
 }

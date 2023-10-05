@@ -27,7 +27,9 @@
         <p>{{app.user.prenom}}</p>{# <a href="#">Modfier</a>
     {% endif %}
 </div> #}
-    <p> Vos informations</p>
+
+
+    <p> Vos informations de connexion :</p>
 <table>
 
 
@@ -38,19 +40,93 @@
 </tr>
 
 <tr>
-    <th></th>
-    <td></td>
+    <th>Email :</th>
+    <td>{{app.user.email}}</td>
+    <td><a href="#">Modfier</a></td>
 </tr>
 
 <tr>
-
-</tr>
-
-<tr>
-
+    <th>Mot de passe :</th>
+    <td>***</td>
+    <td><a href="#">Modfier</a></td>
 </tr>
 
 </table>
+    
+    
+    <p> Vos informations de contact :</p>
 
+<table>
+
+{# {% if app.user.nom is same as(null) or app.user.username is same as(null) %} --> voir comment faire pour régler le soucie de comparaison #} 
+    {# {% elseif  app.user.username is same as(null) %} #}
+    
+        {# <div>
+
+        Veuillez remplir le form
+
+        </div>
+        {% else %} #}
+            
+        <tr>
+            <th> Nom :</th>
+            <td>{{app.user.nom}}</td>
+            <td><a href="#">Modfier</a></td>
+        </tr>
+
+        <tr>
+            <th>Prenom :</th>
+            <td>{{app.user.prenom}}</td>
+            <td><a href="#">Modfier</a></td>
+        </tr>
+
+        <tr>
+            <th>Téléphone :</th>
+            <td>{{app.user.telephone}}</td>
+            <td><a href="#">Modfier</a></td>
+        </tr>
+        
+
+    {# {% endif %} #}
+
+</table>
+
+
+
+    <p> Votre adresse principal :</p>
+
+<table>
+        {# {% if app.user.num_adresse is same as(null)  %}
+
+        <p> Remplir form</p>
+
+        {% else %} #}
+            
+        <tr>
+            <th>Adresse :</th> {# Voir si possible de faire un tableau ext qui permettrais d avoir plusieurs adresses #}
+            <td>{{app.user.num_adresse}}</td>
+            <td>{{app.user.rue_adresse}}</td>
+            <td>{{app.user.complement_adresse}}</td>
+            <td>{{app.user.ville_adresse}}</td>
+            <td>{{app.user.postcode_adresse}}</td>            
+        </tr>
+{# {% endif %} #}
+
+        {# <tr>
+            <th></th>
+            
+            <td><a href="#">Modfier</a></td>
+        </tr>
+
+        <tr>
+            <th>Téléphone :</th>
+            <td>{{app.user.ville_adresse}}</td>
+            <td><a href="#">Modfier</a></td>
+        </tr> #}
+        
+
+
+
+</table> 
 
 {% endblock %}

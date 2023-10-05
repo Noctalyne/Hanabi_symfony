@@ -1,11 +1,32 @@
-<div>
-    <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ultricies faucibus
-         auctor. Aenean imperdiet purus eu purus vulputate mollis. Proin iaculis viverra leo, 
-         at luctus nibh finibus nec. Suspendisse eu purus vitae quam placerat rutrum. Quisque 
-         lacinia bibendum blandit. Suspendisse ex est, tristique id ullamcorper in, pulvinar a 
-         tellus. Sed laoreet eros nisi, in rhoncus leo feugiat eget. Curabitur quis est vitae
-          magna ornare feugiat. Phasellus neque lorem, commodo at varius ut, condimentum eget
-           metus. Pellentesque tristique blandit laoreet. Duis porttitor semper rhoncus.
-    </p>
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{asset('css/shop/card_produit.css')}}">
+{% endblock %}
+
+
+<div class="carte_produit">
+
+	<img src="{{ asset('./images/produits/dbz_2.jpg')}}" alt="">
+
+	<div class="carte_corp_produit">
+
+		<h5 class="carte_nom_produit">Loremp Ipsum</h5>
+
+		<p class="carte_descritpiton_produit">
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            Proin libero arcu, molestie ac arcu eu, gravida vehiculametus.
+            Vestibulum tristique nibh fringilla suscipit elementum.
+             Nam ut sem sed mi aliquet.
+		</p>
+
+		<div class="carte_footer">
+			<p>
+				20.00 £
+			</p>
+
+			<button class="btn_ajout_pannier"> Ajouter </button>
+		</div>
+
+
+	</div>
+
 </div>
