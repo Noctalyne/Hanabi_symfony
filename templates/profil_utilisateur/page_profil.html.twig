@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Profil  {{app.user.username}} {% endblock %}
+
+{% block body %}
+
+<h1> Votre profil </h1>
+
+{# <div>
+    <p>Nom d'utilisateur :</p>
+    <p>{{app.user.username}}</p>
+    <a href="#">Modfier</a>
+</div>
+<div>    <p>Votre email :</p>
+    <p>{{app.user.email}}</p>
+    <a href="#">Modfier</a>
+</div>
+<div>    <p>Votre nom :</p>
+    <p>{{app.user.nom}}</p>
+    <a href="#">Modfier</a>
+</div>
+<div>
+    <p>Votre prenom :</p>
+    {% if app.user.prenom is same as(null)  %}
+        <p style="color: black;"> Inconnu -> Veuillez remplir le champs </p>
+    {% else %}
+        <p>{{app.user.prenom}}</p>{# <a href="#">Modfier</a>
+    {% endif %}
+</div> #}
+    <p> Vos informations</p>
+<table>
+
+
+<tr>
+    <th> Nom d'utilisateur :</th>
+    <td>{{app.user.username}}</td>
+    <td><a href="#">Modfier</a></td>
+</tr>
+
+<tr>
+    <th></th>
+    <td></td>
+</tr>
+
+<tr>
+
+</tr>
+
+<tr>
+
+</tr>
+
+</table>
+
+
+{% endblock %}
