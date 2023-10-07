@@ -9,6 +9,9 @@
 
 {% block body %}
 
+    {% include "./composants_base/banniere.html.twig" %}
+
+
     <div class="intitule_page">
         <h3> Boutique </h3>
     </div>
@@ -16,7 +19,10 @@
 
     <div class="mozaic_produits">
 
-        {% include "./shop/composants_shop/card_produits.html.twig" %}
+        {# Rajouter le IF quand on auras accès au produits #}
+        {# {% for produit in liste_produits %} #}
+            {% include "./shop/composants_shop/card_produits.html.twig" %} 
+        {# {% endfor %} #}
 
         {% include "./shop/composants_shop/card_produits.html.twig" %}
 

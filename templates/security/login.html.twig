@@ -1,4 +1,4 @@
-{# {% extends 'base.html.twig' %} #}
+{% extends 'base.html.twig' %}
 
 {% block title %}Connectez vous{% endblock %}
 
@@ -11,8 +11,6 @@
 
 
 {% block body %}
-
-{% include './composants_base/header.html.twig' %} {# Inclus le header sur chaque page #}
 
 <div class="conteneur">
 
@@ -45,19 +43,16 @@
                 
                 <input type="hidden" name="_csrf_token"value="{{ csrf_token('authenticate') }}">
 
-                {# <div> #}
-                   <div class="btn"><button  type="submit">Connexion</button></div>
-                {# </div> #}
+                <div class="btn"><button  type="submit">Connexion</button></div>
 
             </div>            
         </form>
     </div>
 
     <div>
-        <h4>Ou inscrivez vous <a href="{{ path('app_register') }}">ici</a></h4>
+        <h3>Ou inscrivez vous en  <a href="{{ path('app_register') }}">cliquant ici</a></h3>
     </div>
 
 </div>
 
-            {% include './composants_base/footer.html.twig' %}
 {% endblock %}

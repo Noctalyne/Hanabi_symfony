@@ -2,17 +2,33 @@
 
 {% block title %} Accueil {% endblock %}
 
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{asset('css/accueil.css')}}">
+{% endblock %}
+
 
 {% block body %}
 
-<h1>Nos produits populaires</h1>
+  {% include "./composants_base/banniere.html.twig" %}
 
-{# {% for produit in listeProduits %} #}
-  {% include "./accueil/mozaic_meilleur.produit.html.twig" %}  
-{# {% endfor %} #}
+  <div class="bloc_vente"> {# Max 3 produits #}
+    <h1>Nos produits populaires</h1>
+    <div class="mozaic_accueil">
+      {# Ajouter boucle ici #}
+      {% include "./accueil/mozaic_accueil.html.twig" %}    
+      {% include "./accueil/mozaic_accueil.html.twig" %}
+      {% include "./accueil/mozaic_accueil.html.twig" %}
+    </div>
+  </div>
 
-{# {% include "./accueil/mozaic_meilleur.produit.html.twig" %}
-{% include "./accueil/mozaic_meilleur.produit.html.twig" %}
-{% include "./accueil/mozaic_meilleur.produit.html.twig" %} #}
+  <div class="bloc_vente"> {# Max 3 produits #}
+    <h1>Nos licences populaires</h1>    
+    <div class="mozaic_accueil">
+      {# Ajouter boucle ici #}
+      {% include "./accueil/mozaic_accueil.html.twig" %}
+      {% include "./accueil/mozaic_accueil.html.twig" %}
+      {% include "./accueil/mozaic_accueil.html.twig" %}
+    </div>
+  </div>
 
 {% endblock %}
