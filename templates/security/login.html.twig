@@ -1,31 +1,63 @@
-{% extends 'base.html.twig' %}
+{# {% extends 'base.html.twig' %} #}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Connectez vous{% endblock %}
+
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
+
+    <link rel="stylesheet" href="{{asset('css/login.css')}}">
+{% endblock %}
+
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
+{% include './composants_base/header.html.twig' %} {# Inclus le header sur chaque page #}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+<div class="conteneur">
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+    <div>
+        <h1>Connectez vous</h1>
+    </div>
+    
+    <div>
+        <form method="post">
+            <div class="card_login">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+                {# {% if app.user %}
+                    <div class="mb-3">
+                        You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                {% endif %} #}
+                
+                <div class="mail_login">
+                    <label for="inputEmail" class="card_login_label">Entrez votre email : </label>
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                </div>
+
+                <div class="password_login">
+                    <label for="inputPassword">Entrez votre mot de passe : </label>
+                    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                </div>
+                
+                <input type="hidden" name="_csrf_token"value="{{ csrf_token('authenticate') }}">
+
+                {# <div> #}
+                   <div class="btn"><button  type="submit">Connexion</button></div>
+                {# </div> #}
+
+            </div>            
+        </form>
+    </div>
+
+    <div>
+        <h4>Ou inscrivez vous <a href="{{ path('app_register') }}">ici</a></h4>
+    </div>
+
+</div>
+
+            {% include './composants_base/footer.html.twig' %}
 {% endblock %}

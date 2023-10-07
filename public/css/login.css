@@ -1,0 +1,60 @@
+/* Englobe le form + le lien d'inscription sous forme de conteneur */
+.conteneur {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin: 5% 25% 5% 25%;/* haut - droit - bas - gauche */
+    height: 400px;
+    width: 600px;
+    align-items: center;
+    text-align: center;
+}
+
+.conteneur div {
+    height: max-content;
+}
+
+form {
+    min-height: max-content;
+    margin: 0px;
+}
+
+
+/* Contient le formulaire */
+.card_login {
+    width: 500px;    
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 1fr);
+    grid-column-gap: 0px;
+    padding: 10px;
+}
+
+.mail_login {
+    grid-area: 1 / 1 / 2 / 2;
+    padding: 20px 0px 10px 0px; /* haut - droit - bas - gauche */
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+.password_login {
+    grid-area: 2 / 1 / 3 / 2;
+    padding: 20px 0px 10px 0px;
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+/* Gère la div du formulaire */
+.btn {
+    /* padding: 1%; */
+    grid-area: 3 / 1 / 4 / 2;
+    padding: 20px 0px 10px 0px;
+    display: inline-flex;
+    justify-content: center;
+}
+
+
+/* Gère la div qui renvoie à l inscription */
+ h4 {
+    margin: 0px;
+}

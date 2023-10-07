@@ -3,19 +3,16 @@
 {% block title %} Accueil {% endblock %}
 
 
-
-
 {% block body %}
 
 <h1>Nos produits populaires</h1>
 
-{% for produit in listeProduits %}
+{# {% for produit in listeProduits %} #}
   {% include "./accueil/mozaic_meilleur.produit.html.twig" %}  
-{% endfor %}
+{# {% endfor %} #}
 
 {# {% include "./accueil/mozaic_meilleur.produit.html.twig" %}
 {% include "./accueil/mozaic_meilleur.produit.html.twig" %}
 {% include "./accueil/mozaic_meilleur.produit.html.twig" %} #}
-
 
 {% endblock %}
