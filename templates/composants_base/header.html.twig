@@ -15,7 +15,12 @@
                 <div class="navBar">
                     <a href="{{ path('app_accueil')}}">Accueil</a>
                     <a href="{{ path('app_shop')}}">Boutique</a>
-                    <a href="{{ path('app_contact')}}">Contact</a>{# bloquer l accès si utilisateur non connecté #}
+                    {% if app.user %} 
+                        <a href="{{ path('app_contact_log')}}">Contact</a>{# bloquer l accès si utilisateur non connecté #}
+                    {% else %}
+                        <a href="{{ path('app_contact')}}">Contact</a>
+                    {% endif %}
+                    {# Modifier la vue celon si le user est admin ou pas  #}
                     <a href="{{ path('app_admin')}}">Admin</a>                   
                 </div>
             </div>
@@ -48,7 +53,6 @@
                 {% else %}
                     <div class="menu_connect">               
                         <a href="{{ path('app_login') }}">Connexion / Inscription</a>
-                        {# <a href="{{ path('app_register') }}">Inscription</a> #}
                     </div>
                 {% endif %}
             </div>

@@ -1,14 +1,14 @@
 .formulaireRechercheProduit {
     /* margin-right: 10%;
     margin-left: 10%; */
-    margin:  5% 10% 5% 10%;
+    margin:  2% 10% 2% 10%;
     text-align: center;
 }
 
 .carte_form {
     border: solid #AD0011 1px;
     border-radius: 10px;
-    margin: 3% 15% 3% 15%; /* haut - droit - bas - gauche */
+    /* margin: 3% 15% 3% 15%; haut - droit - bas - gauche */
     padding: 15px;
 }
 
