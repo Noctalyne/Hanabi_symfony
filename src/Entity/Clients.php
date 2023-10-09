@@ -11,12 +11,13 @@ use Doctrine\ORM\Mapping as ORM;
 class Clients extends User
 {
 
-    /* PAS BESOIN D' ID CAR RECUPERER DE USER GRACE A EXTEND */
+    /* VOIR SI BESOIN D' ID CAR RECUPERER DE USER GRACE A EXTEND */
     // #[ORM\Id]
     // #[ORM\GeneratedValue]
     // #[ORM\Column(name:'id_client')]
-    // private ?User $id;
+    // private ?int $idClient = null;
 
+    
 
 
     #[ORM\Column(length: 50, nullable: true, name: 'nom_client')]
@@ -39,6 +40,11 @@ class Clients extends User
     // public function __construct()
     // {
     //     $this->adresses =  new ArrayCollection();
+    // }
+
+    // public function getIdClient(): ?int
+    // {
+    //     return $this->idClient;
     // }
 
     public function getNomClient(): ?string
@@ -79,6 +85,16 @@ class Clients extends User
 
 
 
+    public function setUserEmail(string $email): static
+    {
+        User::setUserEmail($email);
+        return $this;
+    }
+
+    public function getUserEmail(): ?string
+    {
+        return User::getUserEmail();;
+    }
 
     /* A partir d'ici getter et setter des clés étrangère */
 

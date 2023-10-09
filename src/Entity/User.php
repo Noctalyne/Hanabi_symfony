@@ -1,5 +1,8 @@
 <?php
 
+// Attribut en protected pour y accéder dans la classe enfant Client
+
+
 namespace App\Entity;
 
 use App\Repository\UserRepository;
@@ -9,7 +12,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['userEmail'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -21,22 +24,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     //Création de la colonne role
     #[ORM\Column(name: "user_role")] /* le name donne le nom de la colonne */
-    private array $roles = [];
+    protected array $roles = [];
 
     // Création de la colonne email
-    #[ORM\Column(length: 50, name: "user_email")] /*, unique: true le name donne le nom de la colonne */
-    private ?string $email = null;
+    #[ORM\Column(length: 50, name: "userEmail", unique: true)] /* le name donne le nom de la colonne */
+    protected ?string $email = null;
     
     // Création de la colonne identifiant
     #[ORM\Column(length: 50, name: "username")] /* le name donne le nom de la colonne */
-    private ?string $username = null;
+    protected ?string $username = null;
 
     /**
      * @var string The hashed password
      */
     // Création de la colonne password(codé de base)
     #[ORM\Column(length: 60, name: "user_password")] /* le name donne le nom de la colonne */
-    private ?string $password = null;
+    protected ?string $password = null;
 
 
 
@@ -45,12 +48,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    public function getEmail(): ?string
+    public function getUserEmail(): ?string
     {
         return $this->email;
     }
 
-    public function setEmail(string $email): static
+    public function setUserEmail(string $email): static
     {
         $this->email = $email;
 
