@@ -24,18 +24,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = [];
 
     // Création de la colonne email
-    #[ORM\Column(length: 180, name: "user_email", unique: true)] /* le name donne le nom de la colonne */
+    #[ORM\Column(length: 50, name: "user_email")] /*, unique: true le name donne le nom de la colonne */
     private ?string $email = null;
     
     // Création de la colonne identifiant
-    #[ORM\Column(name: "username")] /* le name donne le nom de la colonne */
+    #[ORM\Column(length: 50, name: "username")] /* le name donne le nom de la colonne */
     private ?string $username = null;
 
     /**
      * @var string The hashed password
      */
     // Création de la colonne password(codé de base)
-    #[ORM\Column(name: "user_password")] /* le name donne le nom de la colonne */
+    #[ORM\Column(length: 60, name: "user_password")] /* le name donne le nom de la colonne */
     private ?string $password = null;
 
 
