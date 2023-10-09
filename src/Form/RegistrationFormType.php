@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Clients;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -22,7 +23,13 @@ class RegistrationFormType extends AbstractType
             au formulaire en back --> on afficher sur le twig les(register) 
             les info qu'on veux recevoir*/
 
+            // ->add('roles', HiddenType::class, [
+            //     // 'data ' => '2',
+            //     'attr' => ['value' => array('ROLE_USER')]
+            // ])
+
             ->add('email')
+            
 
             ->add('username')
             
@@ -57,7 +64,7 @@ class RegistrationFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => Clients::class,
         ]);
     }
 }

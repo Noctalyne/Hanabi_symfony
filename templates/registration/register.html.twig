@@ -6,13 +6,15 @@
 
 {% block body %}
 	<h1>Register</h1>
-
+	
 	{{ form_errors(registrationForm) }}
 
 	
 	{{ form_start(registrationForm) }}{# Debut du formulaire #}
 
 	{# Chaque for_row represente un imput et sont label #}
+
+	{# {{ form_row(registrationForm.roles) }} #}
 
 	{{ form_row(registrationForm.username, {
         label: 'username'

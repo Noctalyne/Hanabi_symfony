@@ -15,66 +15,83 @@ class Produits
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $nom_produit = null;
+    private ?string $nomProduit = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $description_produit = null;
+    private ?string $descriptionProduit = null;
 
     #[ORM\Column(length: 100)]
-    private ?string $img_produit = null;
+    private ?string $imgProduit = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 6, scale: 2)]
-    private ?string $prix_produit = null;
+    private ?string $prixProduit = null;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 3, scale: 0)]
+    private ?string $quantStock = null;
+
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNom_Produit(): ?string
+    public function getNomProduit(): ?string
     {
-        return $this->nom_produit;
+        return $this->nomProduit;
     }
 
-    public function setNom_Produit(string $nom_produit): static
+    public function setNomProduit(string $nomProduit): static
     {
-        $this->nom_produit = $nom_produit;
+        $this->nomProduit = $nomProduit;
 
         return $this;
     }
 
-    public function getDescription_Produit(): ?string
+    public function getDescriptionProduit(): ?string
     {
-        return $this->description_produit;
+        return $this->descriptionProduit;
     }
 
-    public function setDescription_Produit(?string $description_produit): static
+    public function setDescriptionProduit(?string $descriptionProduit): static
     {
-        $this->description_produit = $description_produit;
+        $this->descriptionProduit = $descriptionProduit;
 
         return $this;
     }
 
-    public function getImg_Produit(): ?string
+    public function getImgProduit(): ?string
     {
-        return $this->img_produit;
+        return $this->imgProduit;
     }
 
-    public function setImg_Produit(string $img_produit): static
+    public function setImgProduit(string $imgProduit): static
     {
-        $this->img_produit = $img_produit;
+        $this->imgProduit = $imgProduit;
 
         return $this;
     }
 
-    public function getPrix_Produit(): ?string
+    public function getPrixProduit(): ?string
     {
-        return $this->prix_produit;
+        return $this->prixProduit;
     }
 
-    public function setPrix_Produit(string $prix_produit): static
+    public function setPrixProduit(string $prixProduit): static
     {
-        $this->prix_produit = $prix_produit;
+        $this->prixProduit = $prixProduit;
+
+        return $this;
+    }
+
+    public function getQuantStock(): ?string
+    {
+        return $this->quantStock;
+    }
+
+    public function setQuantStock(string $quantStock): static
+    {
+        $this->quantStock = $quantStock;
 
         return $this;
     }

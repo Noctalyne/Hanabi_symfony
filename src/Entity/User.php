@@ -40,42 +40,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 
 
-    // Création de la colonne nom
-    #[ORM\Column(length: 255, name: "user_nom", nullable: true)]
-    private ?string $nom = null;
-
-    // Création de la colonne prénom
-    #[ORM\Column(length: 255, name: "user_prenom", nullable: true)]
-    private ?string $prenom = null;
-
-   // Création colonne numéro télephone
-    #[ORM\Column(length:10, name: "user_telephone", nullable: true)]
-    private ?string $telephone = null;
-
-
-    /* PARTIE QUI VA S'OCCUPER DES INFOS ADRESSE */
-
-    // Création colonne numéro d'adresse
-    #[ORM\Column(length: 5, name: "user_num_adresse", nullable: true)]
-    private ?string $num_adresse = null;
-
-    // Création colonne rue de l adresse
-    #[ORM\Column(length: 150, name: "user_rue_adresse", nullable: true)]
-    private ?string $rue_adresse = null;
-
-    // Création colonne complément d'adresse
-    #[ORM\Column(length: 100, name: "user_complement_adresse", nullable: true)]
-    private ?string $complement_adresse = null;    
-
-    // Création colonne ville d'adresse
-    #[ORM\Column(length: 50, name: "user_ville_adresse", nullable: true)]
-    private ?string $ville_adresse = null;
-
-   // Création colonne code postal adresse
-    #[ORM\Column(length: 10, name: "user_postcode_adresse", nullable: true)]
-    private ?string $postcode_adresse = null;
-
-
     public function getId(): ?int
     {
         return $this->id;
@@ -156,13 +120,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 
 
-
-
     /**
      * @see UserInterface
     */
 
-    // gère le nom d utilisateur
+    // Gère le nom d utilisateur
     public function getUsername(): ?string
     {
         return $this->username;
@@ -174,106 +136,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-
-    // gère le nom du client
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-    public function setNom(string $nom): static
-    {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
-
-    // gère le prénom du client
-    public function getPrenom(): ?string
-    {
-        return $this->prenom;
-    }
-    public function setPrenom(string $prenom): static
-    {
-        $this->prenom = $prenom;
-
-        return $this;
-    }
-
-
-    /* PARTIE QUI VA S'OCCUPER DES INFOS ADRESSE */
-
-    //  gère le numéro télephone
-   public function getTelephone(): ?string
-   {
-       return $this->telephone;
-   }
-   public function setTelephone(string $telephone): static
-   {
-       $this->telephone = $telephone;
-
-       return $this;
-   }
-
-   //  gère le numéro d'adresse
-   public function getNum_Adresse(): ?string
-   {
-       return $this->num_adresse;
-   }
-   public function setNum_Adresse(string $num_adresse): static
-   {
-       $this->num_adresse = $num_adresse;
-
-       return $this;
-   }
-
-   //  gère le rue de l adresse
-   public function getRue_Adresse(): ?string
-   {
-       return $this->rue_adresse;
-   }
-   public function setRue_Adresse(string  $rue_adresse): static
-   {
-       $this->rue_adresse = $rue_adresse;
-
-       return $this;
-   }
-
-   //  gère le complément d'adresse
-   public function getComplement_Adresse(): ?string
-   {
-       return $this->complement_adresse;
-   }
-   public function setComplement_Adresse(string $complement_adresse): static
-   {
-       $this->complement_adresse = $complement_adresse  ;
-
-       return $this;
-   }
-
-   //  gère le ville d'adresse
-   public function getVille_Adresse(): ?string
-   {
-       return $this->ville_adresse;
-   }
-   public function setVille_Adresse(string $ville_adresse ): static
-   {
-       $this->ville_adresse = $ville_adresse ;
-
-       return $this;
-   }
-
-  //  gère le code postal adresse
-  public function getPostcode_Adresse (): ?string
-  {
-      return $this->postcode_adresse ;
-  }
-  public function setPostcode_Adresse(string $postcode_adresse): static
-  {
-      $this->postcode_adresse = $postcode_adresse;
-
-      return $this;
-  }
-
-    
+      
 }

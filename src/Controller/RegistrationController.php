@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Clients;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,7 +18,7 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
-        $user = new User();
+        $user = new Clients();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
