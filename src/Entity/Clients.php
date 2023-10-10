@@ -12,16 +12,26 @@ class Clients extends User /* */
 {
 
     /* VOIR SI BESOIN D' ID CAR RECUPERER DE USER GRACE A EXTEND */
-    // #[ORM\Id]
-    // // // #[ORM\GeneratedValue]
+    #[ORM\Id]
+    // // #[ORM\GeneratedValue]
     // #[ORM\Column(name:'id_client')]
-    // private ?int $idClient = null;
+    private ?int $idClient = null;
+
+/**
+ 
+ */
+#[ORM\OneToOne(targetEntity:"User", inversedBy:"client")]
+#[ORM\JoinColumn(name:"user_id", referencedColumnName:"id")]
+ private $user;
 
 
+ public function getUser(){
+    return $this->user;
+}
 
-    #[ORM\OneToOne(inversedBy: 'emailUser', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(name: "email")]
-    protected ?User $emailUser = null;  
+    // #[ORM\OneToOne(inversedBy: 'emailUser', cascade: ['persist', 'remove'])]
+    // #[ORM\JoinColumn(name: "email")]
+    // protected ?User $emailUser = null;  
 
 
 
@@ -51,30 +61,17 @@ class Clients extends User /* */
     // }
 
 
-    // public function getIdClient(): ?user
-    // {
-    //     return $this->idClient;
-    // }
+    public function getIdClient(): ?int
+    {
+        return $this->idClient;
+    }
 
-    // public function setIdClient(user $idClient): static
-    // {
-    //     $this->idClient = $idClient;
+    public function setIdClient(?int $idClient): static
+    {
+        $this->idClient = $idClient;
 
-    //     return $this;
-    // }
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return $this;
+    }
 
 
     public function getNomClient(): ?string
@@ -127,15 +124,15 @@ class Clients extends User /* */
     //     return $this->adresses;
     // }
 
-    public function getEmail(): ?user
-    {
-        return $this->emailUser;
-    }
+    // public function getEmail(): ?user
+    // {
+    //     return $this->emailUser;
+    // }
 
-    public function setEmailUser(user $emailUser): static
-    {
-        $this->emailUser = $emailUser;
+    // public function setEmailUser(user $emailUser): static
+    // {
+    //     $this->emailUser = $emailUser;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 }

@@ -22,16 +22,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
+   
+    #[ORM\OneToOne(targetEntity:"Clients", mappedBy:"user")]   
+    private $client;
+
+
+    public function getClient(){
+        return $this->client;
+    }
+
+
     //Création de la colonne role
     #[ORM\Column(name: "user_role")] /* le name donne le nom de la colonne */
     protected array $roles = [];
 
     // Création de la colonne email
     #[ORM\Column(length: 50, name: "email")]  /* , unique: true */  /* le name donne le nom de la colonne */
-    // protected ?string $userEmail= null;
+    protected ?string $userEmail= null;
 
-    #[ORM\OneToOne(mappedBy: 'email', cascade: ['persist', 'remove'])]
-    protected ?Clients $email = null;
+    // #[ORM\OneToOne(mappedBy: 'email', cascade: ['persist', 'remove'])]
+    // protected ?Clients $email = null;
     
     
     
@@ -55,17 +65,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    // public function getUserEmail(): ?string
-    // {
-    //     return $this->userEmail;
-    // }
+    public function getUserEmail(): ?string
+    {
+        return $this->userEmail;
+    }
 
-    // public function setUserEmail(string $userEmail): static
-    // {
-    //     $this->userEmail = $userEmail;
+    public function setUserEmail(string $userEmail): static
+    {
+        $this->userEmail = $userEmail;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     /**
      * A visual identifier that represents this user.
@@ -74,7 +84,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email; // ici l user s identifier avec email voir si possible de mettre email + username
+        return (string) $this->userEmail; // ici l user s identifier avec email voir si possible de mettre email + username
         // return (string) $this->username;
     }
 
@@ -104,7 +114,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @see PasswordAuthenticatedUserInterface
-     */
+    */
     public function getPassword(): string
     {
         return $this->password; //password fait référence a ce qui est dans le ORM en haut
@@ -146,22 +156,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getEmailUser(): ?Clients
-    {
-        return $this->email;
-    }
 
-    public function setEmailUser(Clients $emailUser): static
-    {
-        // set the owning side of the relation if necessary
-        if ($emailUser->getEmail() !== $this) {
-            $emailUser->setEmailUser($this);
-        }
 
-        $this->email = $emailUser;
 
-        return $this;
-    }
+
+
+
+    // public function getEmailUser(): ?Clients
+    // {
+    //     return $this->email;
+    // }
+
+    // public function setEmailUser(Clients $emailUser): static
+    // {
+    //     // set the owning side of the relation if necessary
+    //     if ($emailUser->getEmail() !== $this) {
+    //         $emailUser->setEmailUser($this);
+    //     }
+
+    //     $this->email = $emailUser;
+
+    //     return $this;
+    // }
 
       
 }
