@@ -3,21 +3,27 @@
 namespace App\Entity;
 
 use App\Repository\ClientsRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+// use Doctrine\Common\Collections\ArrayCollection;
+// use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ClientsRepository::class)]
-class Clients extends User
+class Clients extends User /* */
 {
 
     /* VOIR SI BESOIN D' ID CAR RECUPERER DE USER GRACE A EXTEND */
     // #[ORM\Id]
-    // #[ORM\GeneratedValue]
+    // // // #[ORM\GeneratedValue]
     // #[ORM\Column(name:'id_client')]
     // private ?int $idClient = null;
 
-    
+
+
+    #[ORM\OneToOne(inversedBy: 'emailUser', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(name: "email")]
+    protected ?User $emailUser = null;  
+
+
 
 
     #[ORM\Column(length: 50, nullable: true, name: 'nom_client')]
@@ -32,6 +38,8 @@ class Clients extends User
 
 
 
+
+
     // #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: Adresses::class)]
     // #[ORM\Column(nullable: true, name: "adresse")]
     // private Collection $adresses;
@@ -42,10 +50,32 @@ class Clients extends User
     //     $this->adresses =  new ArrayCollection();
     // }
 
-    // public function getIdClient(): ?int
+
+    // public function getIdClient(): ?user
     // {
     //     return $this->idClient;
     // }
+
+    // public function setIdClient(user $idClient): static
+    // {
+    //     $this->idClient = $idClient;
+
+    //     return $this;
+    // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function getNomClient(): ?string
     {
@@ -85,17 +115,6 @@ class Clients extends User
 
 
 
-    public function setUserEmail(string $email): static
-    {
-        User::setUserEmail($email);
-        return $this;
-    }
-
-    public function getUserEmail(): ?string
-    {
-        return User::getUserEmail();;
-    }
-
     /* A partir d'ici getter et setter des clés étrangère */
 
  
@@ -107,4 +126,16 @@ class Clients extends User
     // {
     //     return $this->adresses;
     // }
+
+    public function getEmail(): ?user
+    {
+        return $this->emailUser;
+    }
+
+    public function setEmailUser(user $emailUser): static
+    {
+        $this->emailUser = $emailUser;
+
+        return $this;
+    }
 }

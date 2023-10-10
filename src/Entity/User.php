@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['userEmail'], message: 'There is already an account with this email')]
+// #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -27,8 +27,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     protected array $roles = [];
 
     // Création de la colonne email
-    #[ORM\Column(length: 50, name: "userEmail", unique: true)] /* le name donne le nom de la colonne */
-    protected ?string $email = null;
+    #[ORM\Column(length: 50, name: "email")]  /* , unique: true */  /* le name donne le nom de la colonne */
+    // protected ?string $userEmail= null;
+
+    #[ORM\OneToOne(mappedBy: 'email', cascade: ['persist', 'remove'])]
+    protected ?Clients $email = null;
+    
+    
     
     // Création de la colonne identifiant
     #[ORM\Column(length: 50, name: "username")] /* le name donne le nom de la colonne */
@@ -43,22 +48,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 
 
+
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUserEmail(): ?string
-    {
-        return $this->email;
-    }
+    // public function getUserEmail(): ?string
+    // {
+    //     return $this->userEmail;
+    // }
 
-    public function setUserEmail(string $email): static
-    {
-        $this->email = $email;
+    // public function setUserEmail(string $userEmail): static
+    // {
+    //     $this->userEmail = $userEmail;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * A visual identifier that represents this user.
@@ -135,6 +142,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUsername(string $username): static
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    public function getEmailUser(): ?Clients
+    {
+        return $this->email;
+    }
+
+    public function setEmailUser(Clients $emailUser): static
+    {
+        // set the owning side of the relation if necessary
+        if ($emailUser->getEmail() !== $this) {
+            $emailUser->setEmailUser($this);
+        }
+
+        $this->email = $emailUser;
 
         return $this;
     }
