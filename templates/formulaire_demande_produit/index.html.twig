@@ -1,20 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}FormulaireDemandeProduit index{% endblock %}
+{# a modifier #}
+{% block stylesheets %}<link rel="stylesheet" href="{{asset('css/formIndex.css')}}"> {% endblock %}
+
+{% block title %}Liste des formulaires reçu{% endblock %}
 
 {% block body %}
     <h1>FormulaireDemandeProduit index</h1>
 
+<a href="{{ path('app_formulaire_demande_produit_new') }}">Create new</a>
+
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>TypeProduit</th>
-                <th>DescriptionProduit</th>
-                <th>DateEnvoieForm</th>
-                <th>DateReponseForm</th>
-                <th>ReponseDemande</th>
-                <th>actions</th>
+                <th>Id produit</th>
+                <th>Type de produit</th>
+                <th>Description produit</th>
+                <th>Date d'envoie du formulaire</th>                
+                <th>Date reponse vendeur Accepter/ Refuser</th>
+                {# <th></th> #}
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -23,21 +28,32 @@
                 <td>{{ formulaire_demande_produit.id }}</td>
                 <td>{{ formulaire_demande_produit.TypeProduit }}</td>
                 <td>{{ formulaire_demande_produit.descriptionProduit }}</td>
-                <td>{{ formulaire_demande_produit.dateEnvoieForm ? formulaire_demande_produit.dateEnvoieForm|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ formulaire_demande_produit.dateReponseForm ? formulaire_demande_produit.dateReponseForm|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ formulaire_demande_produit.reponseDemande ? 'Yes' : 'No' }}</td>
+                <td>{{ formulaire_demande_produit.dateEnvoieForm ? formulaire_demande_produit.dateEnvoieForm|date('d-m-Y H:i:s') : '' }}</td>
+                {# VOIR POUR ICI MODIFIER LE BOOLEAN POUR ACEPTER OU REFUSER LA DEMANDE #}
+                {% if  formulaire_demande_produit.reponseDemande is same as('Attente')  %} afficher bouton path traiter 
+                    <td>
+                    <p> Demande en attente :</p>
+                    <a href="{{ path('app_formulaire_demande_produit_traiter', {'id': formulaire_demande_produit.id}) }}">Accepter</a>
+                    <td>
+                    {% else %}
+                    <td>
+                        {{ formulaire_demande_produit.dateReponseForm ? formulaire_demande_produit.dateReponseForm|date('d-m-Y H:i:s') : '' }}
+                        {{ formulaire_demande_produit.reponseDemande }}
+                    </td>
+                {% endif %}
+              
                 <td>
-                    <a href="{{ path('app_formulaire_demande_produit_show', {'id': formulaire_demande_produit.id}) }}">show</a>
-                    <a href="{{ path('app_formulaire_demande_produit_edit', {'id': formulaire_demande_produit.id}) }}">edit</a>
+                    <a href="{{ path('app_formulaire_demande_produit_show', {'id': formulaire_demande_produit.id}) }}">Afficher</a>
+                    <a href="{{ path('app_formulaire_demande_produit_edit', {'id': formulaire_demande_produit.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="7">Aucun formulaire à afficher</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_formulaire_demande_produit_new') }}">Create new</a>
+    
 {% endblock %}

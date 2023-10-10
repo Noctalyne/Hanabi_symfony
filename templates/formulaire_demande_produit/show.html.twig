@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}FormulaireDemandeProduit{% endblock %}
+{% block title %}Voir le formulaire {% endblock %}
 
 {% block body %}
     <h1>FormulaireDemandeProduit</h1>
@@ -34,9 +34,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_formulaire_demande_produit_index') }}">back to list</a>
+    <a href="{{ path('app_formulaire_demande_produit_index') }}">Retour à la liste</a>
 
-    <a href="{{ path('app_formulaire_demande_produit_edit', {'id': formulaire_demande_produit.id}) }}">edit</a>
+    <a href="{{ path('app_formulaire_demande_produit_edit', {'id': formulaire_demande_produit.id}) }}">Modifier</a>
 
     {{ include('formulaire_demande_produit/_delete_form.html.twig') }}
 {% endblock %}

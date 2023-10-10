@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20231010133318 extends AbstractMigration
+final class Version20231010162746 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -22,6 +22,7 @@ final class Version20231010133318 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE adresses (id INT AUTO_INCREMENT NOT NULL, num_adresse INT NOT NULL, rue_adresse VARCHAR(50) NOT NULL, complement_adresse VARCHAR(50) NOT NULL, ville_adresse VARCHAR(30) NOT NULL, cp_adresse VARCHAR(10) NOT NULL, pays_adresse VARCHAR(30) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE clients (id INT AUTO_INCREMENT NOT NULL, user_role JSON NOT NULL, email VARCHAR(50) NOT NULL, username VARCHAR(50) NOT NULL, user_password VARCHAR(60) NOT NULL, nom_client VARCHAR(50) DEFAULT NULL, prenom_client VARCHAR(50) DEFAULT NULL, num_telephone VARCHAR(10) DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE formulaire_demande_produit (id INT AUTO_INCREMENT NOT NULL, type_produit VARCHAR(20) NOT NULL, description_produit VARCHAR(300) NOT NULL, date_envoie_form DATETIME NOT NULL, date_reponse_form DATETIME DEFAULT NULL, reponse_demande TINYINT(1) DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE produits (id INT AUTO_INCREMENT NOT NULL, nom_produit VARCHAR(50) NOT NULL, description_produit LONGTEXT DEFAULT NULL, img_produit VARCHAR(100) NOT NULL, prix_produit NUMERIC(6, 2) NOT NULL, quant_stock NUMERIC(3, 0) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, user_role JSON NOT NULL, email VARCHAR(50) NOT NULL, username VARCHAR(50) NOT NULL, user_password VARCHAR(60) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE vendeurs (id INT AUTO_INCREMENT NOT NULL, user_role JSON NOT NULL, email VARCHAR(50) NOT NULL, username VARCHAR(50) NOT NULL, user_password VARCHAR(60) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -33,6 +34,7 @@ final class Version20231010133318 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('DROP TABLE adresses');
         $this->addSql('DROP TABLE clients');
+        $this->addSql('DROP TABLE formulaire_demande_produit');
         $this->addSql('DROP TABLE produits');
         $this->addSql('DROP TABLE user');
         $this->addSql('DROP TABLE vendeurs');

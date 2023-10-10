@@ -21,13 +21,15 @@ class FormulaireDemandeProduit
     private ?string $descriptionProduit = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $dateEnvoieForm = null;
+    // private ?\DateTimeInterface $dateEnvoieForm = null;
+    private $dateEnvoieForm;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $dateReponseForm = null;
+    // private ?\DateTimeInterface $dateReponseForm = null;
+    private $dateReponseForm;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $reponseDemande = null;
+    #[ORM\Column(length: 5, nullable: true)]
+    private ?string $reponseDemande = null;
 
     public function getId(): ?int
     {
@@ -63,7 +65,7 @@ class FormulaireDemandeProduit
         return $this->dateEnvoieForm;
     }
 
-    public function setDateEnvoieForm(\DateTimeInterface $dateEnvoieForm): static
+    public function setDateEnvoieForm(\DateTimeInterface $dateEnvoieForm): self
     {
         $this->dateEnvoieForm = $dateEnvoieForm;
 
@@ -82,12 +84,12 @@ class FormulaireDemandeProduit
         return $this;
     }
 
-    public function isReponseDemande(): ?bool
+    public function getReponseDemande(): ?string 
     {
         return $this->reponseDemande;
     }
 
-    public function setReponseDemande(?bool $reponseDemande): static
+    public function setReponseDemande(?string $reponseDemande): static
     {
         $this->reponseDemande = $reponseDemande;
 

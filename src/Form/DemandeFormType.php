@@ -14,9 +14,9 @@ class DemandeFormType extends AbstractType
         $builder
             ->add('TypeProduit')
             ->add('descriptionProduit')
-            ->add('dateEnvoieForm')
-            ->add('dateReponseForm')
-            ->add('reponseDemande')
+            
+            // ->add('dateReponseForm') 
+            // ->add('reponseDemande')
         ;
     }
 

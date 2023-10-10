@@ -1,4 +1,28 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+    {# {% if app.request.attributes.get('_route') == './traiter/Formulaire{id}' %}  #}
+        {# {{form_row(form.reponseDemande, )}} #}
+    {# {% endif %} #}
+    
+    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}
+
+    {#{{ form_errors(form) }}
+
+    {{ form_start(form) }}
+        {{ form_row(form.TypeProduit, {
+            label: 'ChoisissSez le type de produit voulue :'
+        }) }}S
+         Voir POUR AJOUTER LE "AUTRES"
+
+        {{ form_row(form.descriptionProduit, {
+            label: 'Veuillez préciser votre recherche :'
+        }) }}
+        {% if app.user.roles is same as(['ROLE_ADMIN']) %}
+            {{ form_row(form.reponseDemande, {
+                label: 'Réponse du vendeur :'
+                }) }}
+        {% endif %}
+        <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+    {{ form_end(form) }} #}
