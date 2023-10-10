@@ -20,19 +20,19 @@ class RegistrationFormType extends AbstractType
     {
         $builder
 
-        /* Ici avec add on ajouter les donnée demander 
+            /* Ici avec add on ajouter les donnée demander 
             au formulaire en back --> on afficher sur le twig les(register) 
             les info qu'on veux recevoir*/
 
 
 
-            ->add('email',TextType::class,[
+            ->add('email', TextType::class, [
                 'mapped' => false
             ])
-            
+
 
             ->add('username')
-            
+
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
@@ -51,6 +51,16 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
 
+            // ->add('nom', TextType::class, [
+            //     'mapped' => false
+            // ])
+
+            // ->add('prenom', TextType::class, [
+            //     'mapped' => false
+            // ])
+
+
+
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -64,7 +74,7 @@ class RegistrationFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' =>user::class 
+            'data_class' => user::class
         ]);
     }
 }
