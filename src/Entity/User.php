@@ -23,12 +23,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
    
-    #[ORM\OneToOne(targetEntity:"Clients", mappedBy:"user")]   
+    // #[ORM\OneToOne(targetEntity:"Clients", mappedBy:"User")]
+    
+    /**
+    *@ORM\OneToOne(targetEntity:"Clients", mappedBy:"User") 
+     */
     private $client;
 
 
     public function getClient(){
         return $this->client;
+    }
+
+    public function setClient(Clients $client) :static
+    {
+        $this->client = $client;
+        return $this;
     }
 
 
@@ -38,11 +48,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     // Création de la colonne email
     #[ORM\Column(length: 50, name: "email")]  /* , unique: true */  /* le name donne le nom de la colonne */
-    protected ?string $userEmail= null;
-
-    // #[ORM\OneToOne(mappedBy: 'email', cascade: ['persist', 'remove'])]
-    // protected ?Clients $email = null;
-    
+    protected ?string $email= null;
     
     
     // Création de la colonne identifiant
@@ -65,14 +71,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    public function getUserEmail(): ?string
+    public function getEmail(): ?string
     {
-        return $this->userEmail;
+        return $this->email;
     }
 
-    public function setUserEmail(string $userEmail): static
+    public function setEmail(string $email): static
     {
-        $this->userEmail = $userEmail;
+        $this->email = $email;
 
         return $this;
     }
@@ -84,7 +90,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->userEmail; // ici l user s identifier avec email voir si possible de mettre email + username
+        return (string) $this->email; // ici l user s identifier avec email voir si possible de mettre email + username
         // return (string) $this->username;
     }
 
@@ -156,28 +162,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-
-
-
-
-
-
-    // public function getEmailUser(): ?Clients
-    // {
-    //     return $this->email;
-    // }
-
-    // public function setEmailUser(Clients $emailUser): static
-    // {
-    //     // set the owning side of the relation if necessary
-    //     if ($emailUser->getEmail() !== $this) {
-    //         $emailUser->setEmailUser($this);
-    //     }
-
-    //     $this->email = $emailUser;
-
-    //     return $this;
-    // }
 
       
 }

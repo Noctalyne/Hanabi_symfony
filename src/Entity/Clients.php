@@ -17,17 +17,26 @@ class Clients extends User /* */
     // #[ORM\Column(name:'id_client')]
     private ?int $idClient = null;
 
-/**
- 
- */
-#[ORM\OneToOne(targetEntity:"User", inversedBy:"client")]
-#[ORM\JoinColumn(name:"user_id", referencedColumnName:"id")]
- private $user;
+
+    // #[ORM\OneToOne(targetEntity: "User", inversedBy: "client")]
+    // #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id")]
+
+    /**
+     *@ORM\OneToOne(targetEntity: "User", inversedBy: "client")
+     *ORM\JoinColumn(name: "user_id", referencedColumnName: "id")
+     */
+    private $user;
 
 
- public function getUser(){
-    return $this->user;
-}
+    public function getUser()
+    {
+        return $this->user;
+    }
+    public function setUser(User $user): static
+    {
+        $this->user = $user;
+        return $this;
+    }
 
     // #[ORM\OneToOne(inversedBy: 'emailUser', cascade: ['persist', 'remove'])]
     // #[ORM\JoinColumn(name: "email")]
@@ -114,7 +123,7 @@ class Clients extends User /* */
 
     /* A partir d'ici getter et setter des clés étrangère */
 
- 
+
     // /**
     //  * @return Collection<int, Adresses>
     //  */
