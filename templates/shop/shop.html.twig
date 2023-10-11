@@ -4,6 +4,7 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{asset('css/shop/shop.css')}}">
+	<link rel="stylesheet" href="{{asset('css/shop/card_produit.css')}}">
 {% endblock %}
 
 
@@ -11,31 +12,27 @@
 
     {% include "./composants_base/banniere.html.twig" %}
 
-
     <div class="intitule_page">
         <h1> Boutique </h1>
     </div>
 
-
     <div class="mozaic_produits">
+        {% for produit in produits %}
+            <div class="carte_produit">
+                <img src="{{ asset('./images/produits/dbz_2.jpg')}}" alt=""> {# {{ produit.imgProduit }} #}
 
-        {# Rajouter le IF quand on auras accès au produits #}
-        {# {% for produit in liste_produits %} #}
-            {% include "./shop/composants_shop/card_produits.html.twig" %} 
-        {# {% endfor %} #}
+                <div class="carte_corp_produit">
+                    <h5 class="carte_nom_produit">{{ produit.nomProduit }}</h5>
 
-        {% include "./shop/composants_shop/card_produits.html.twig" %}
+                    <p class="carte_descritpiton_produit">{{ produit.descriptionProduit }}</p>
 
-        {% include "./shop/composants_shop/card_produits.html.twig" %}
-
-        {% include "./shop/composants_shop/card_produits.html.twig" %}
-
-        {% include "./shop/composants_shop/card_produits.html.twig" %}
-
-        {% include "./shop/composants_shop/card_produits.html.twig" %}    
-    
+                    <div class="carte_footer">
+                        <p>{{ produit.prixProduit }}</p>
+                        <button class="btn_ajout_pannier"> Ajouter </button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}    
     </div>
-
-
 
 {% endblock %}

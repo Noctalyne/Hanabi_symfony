@@ -3,7 +3,7 @@
 {% block title %}Produits{% endblock %}
 
 {% block body %}
-    <h1>Produits</h1>
+    <h1>Fiche produit : {{ produit.nomProduit }}</h1>
 
     <table class="table">
         <tbody>
@@ -12,31 +12,31 @@
                 <td>{{ produit.id }}</td>
             </tr>
             <tr>
-                <th>NomProduit</th>
+                <th>Nom produit</th>
                 <td>{{ produit.nomProduit }}</td>
             </tr>
             <tr>
-                <th>DescriptionProduit</th>
+                <th>Description produit</th>
                 <td>{{ produit.descriptionProduit }}</td>
             </tr>
             <tr>
-                <th>ImgProduit</th>
+                <th>Image produit</th>
                 <td>{{ produit.imgProduit }}</td>
             </tr>
             <tr>
-                <th>PrixProduit</th>
+                <th>Prix produit</th>
                 <td>{{ produit.prixProduit }}</td>
             </tr>
             <tr>
-                <th>QuantStock</th>
+                <th>Quantité en stock</th>
                 <td>{{ produit.quantStock }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_produits_index') }}">back to list</a>
+    <a href="{{ path('app_produits_index') }}">Retour à la liste</a>
 
-    <a href="{{ path('app_produits_edit', {'id': produit.id}) }}">edit</a>
+    <a href="{{ path('app_produits_edit', {'id': produit.id}) }}">Modifier</a>
 
     {{ include('produits/_delete_form.html.twig') }}
 {% endblock %}

@@ -4,6 +4,8 @@
 
 {% block stylesheets %}
   <link rel="stylesheet" href="{{asset('css/accueil.css')}}">
+  <link rel="stylesheet" href="{{asset('css/mozaic_accueil.css')}}">
+
 {% endblock %}
 
 
@@ -11,24 +13,44 @@
   
   {% include "./composants_base/banniere.html.twig" %}
 
+  {# Mozaic produit le plus vendue #}
   <div class="bloc_vente"> {# Max 3 produits #}
     <h1>Nos produits populaires</h1>
+
     <div class="mozaic_accueil">
-      {# Ajouter boucle ici #}
-      {% include "./accueil/mozaic_accueil.html.twig" %}    
-      {% include "./accueil/mozaic_accueil.html.twig" %}
-      {% include "./accueil/mozaic_accueil.html.twig" %}
+      {% for produit in produits %}
+        <div class="carte_produit">
+          <img src="{{ asset('./images/produits/dbz_2.jpg')}}" alt="image produit ">
+          <div class="carte_corp_produit">
+            <h5 class="carte_nom_produit">{{ produit.nomProduit }}</h5>
+            <div class="carte_foot">
+              <p>{{ produit.prixProduit }}</p>	
+              <button class="acces_prod"> Voir </button>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
     </div>
+
   </div>
 
+  {# Mozaic licence populaire #}
   <div class="bloc_vente"> {# Max 3 produits #}
     <h1>Nos licences populaires</h1>    
     <div class="mozaic_accueil">
-      {# Ajouter boucle ici #}
-      {% include "./accueil/mozaic_accueil.html.twig" %}
-      {% include "./accueil/mozaic_accueil.html.twig" %}
-      {% include "./accueil/mozaic_accueil.html.twig" %}
-    </div>
+
+      {% for produit in produits %}
+        <div class="carte_produit">
+          <img src="{{ asset('./images/produits/dbz_2.jpg')}}" alt="image produit ">
+          <div class="carte_corp_produit">
+            <h5 class="carte_nom_produit">{{ produit.nomProduit }}</h5>
+            <div class="carte_foot">
+              <p>{{ produit.prixProduit }}</p>	
+              <button class="acces_prod"> Voir </button>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
   </div>
 
 {% endblock %}

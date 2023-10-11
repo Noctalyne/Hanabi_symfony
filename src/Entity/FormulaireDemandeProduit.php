@@ -28,7 +28,7 @@ class FormulaireDemandeProduit
     // private ?\DateTimeInterface $dateReponseForm = null;
     private $dateReponseForm;
 
-    #[ORM\Column(length: 5, nullable: true)]
+    #[ORM\Column(length: 10, nullable: true)]
     private ?string $reponseDemande = null;
 
     public function getId(): ?int

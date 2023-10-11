@@ -28,6 +28,7 @@ class FormulaireDemandeProduitType extends AbstractType
             ])
             
             ->add('descriptionProduit', TextareaType::class, [
+                // 'attr' => ['style' => 'word-break: break-word;'], //voir pour  casser les mots et remplir la case sans la dépassé
                 'constraints' => 
                     new Length([
                         'min' => 0,
@@ -41,8 +42,8 @@ class FormulaireDemandeProduitType extends AbstractType
             ->add('reponseDemande', ChoiceType::class, [
                 'choices' => [
                     // 'Attente' => 'Attente',
-                    'Oui' => 'Oui',
-                    'Non' => 'Non',
+                    'Oui' => 'Accepter',
+                    'Non' => 'Refuser',
                 ],
                 // 'attr' => ['style' => 'display:none;'], //permet de cacher l'imput
                 'required' => false, // Pour rendre le champ facultatif

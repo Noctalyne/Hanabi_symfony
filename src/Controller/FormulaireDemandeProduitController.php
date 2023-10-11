@@ -75,7 +75,7 @@ class FormulaireDemandeProduitController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // Enregistrez la réponse du vendeur dans l'entité
             $dateReponseForm = new \DateTime();
-            $formulaireDemandeProduit->setDateEnvoieForm($dateReponseForm);
+            $formulaireDemandeProduit->setDateReponseForm($dateReponseForm);
 
             $entityManager->persist($formulaireDemandeProduit);
             $entityManager->flush();
@@ -89,17 +89,6 @@ class FormulaireDemandeProduitController extends AbstractController
             'form' => $form,
         ]);
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
     //Crud pour modifier le formulaire

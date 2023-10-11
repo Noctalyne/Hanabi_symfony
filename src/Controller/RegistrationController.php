@@ -59,14 +59,16 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            // Enregistre l'entité Clients et user
+            // Enregistre l'entité user
+            $entityManager->persist($user);            
+            $entityManager->flush();// Enregistre les modifications dans la base de données
+
+            $idClient = $user->getId();
+            $client->setIdClient($idClient);
+
+            //Enregistre l'entité Clients et pemet de s 'assure que l id de user = client
             $entityManager->persist($client);
-            $entityManager->persist($user);
-
-            // Enregistrez les modifications dans la base de données
             $entityManager->flush();
-
-            // do anything else you need here, like send an email
 
             return $this->redirectToRoute('app_login');
         }

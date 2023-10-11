@@ -1,10 +1,5 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-
-    {# {% if app.request.attributes.get('_route') == './traiter/Formulaire{id}' %}  #}
-        {# {{form_row(form.reponseDemande, )}} #}
-    {# {% endif %} #}
-    
     <button class="btn">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}
 

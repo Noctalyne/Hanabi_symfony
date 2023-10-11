@@ -10,26 +10,30 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
 #[ORM\Entity(repositoryClass: ClientsRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+// #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 
 class Clients extends User /* */
 {
 
     /* VOIR SI BESOIN D' ID CAR RECUPERER DE USER GRACE A EXTEND */
-    #[ORM\Id]
-    // // #[ORM\GeneratedValue]
-    // #[ORM\Column(name:'id_client')]
-    private ?int $idClient = null;
+    // #[ORM\Column(nullable: false, name: 'idClient')]
+    // private ?int $idClient = null;
 
+/**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
-    // #[ORM\OneToOne(targetEntity: "User", inversedBy: "client")]
-    // #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id")]
 
     /**
-     *@ORM\OneToOne(targetEntity: "User", inversedBy: "client")
-     *ORM\JoinColumn(name: "user_id", referencedColumnName: "id")
+        *@ORM\OneToOne(targetEntity: "User", inversedBy: "client")
+        *ORM\JoinColumn()
      */
-    private $user;
+    protected $user;
 
 
     public function getUser()
@@ -42,12 +46,6 @@ class Clients extends User /* */
         return $this;
     }
 
-    // #[ORM\OneToOne(inversedBy: 'emailUser', cascade: ['persist', 'remove'])]
-    // #[ORM\JoinColumn(name: "email")]
-    // protected ?User $emailUser = null;  
-
-
-
 
     #[ORM\Column(length: 50, nullable: true, name: 'nom_client')]
     private ?string $nomClient = null;
@@ -58,6 +56,7 @@ class Clients extends User /* */
     //Création colonne numéro télephone
     #[ORM\Column(length: 10, nullable: true, name: "num_telephone")]
     private ?string $telephone = null;
+
 
 
 
@@ -76,12 +75,13 @@ class Clients extends User /* */
 
     public function getIdClient(): ?int
     {
-        return $this->idClient;
+
+        return $this->id;
     }
 
-    public function setIdClient(?int $idClient): static
+    public function setIdClient(?int $id): static
     {
-        $this->idClient = $idClient;
+        $this->id = $id;
 
         return $this;
     }
@@ -123,29 +123,4 @@ class Clients extends User /* */
         return $this;
     }
 
-
-
-    /* A partir d'ici getter et setter des clés étrangère */
-
-
-    // /**
-    //  * @return Collection<int, Adresses>
-    //  */
-
-    // public function getAdresse(): Collection
-    // {
-    //     return $this->adresses;
-    // }
-
-    // public function getEmail(): ?user
-    // {
-    //     return $this->emailUser;
-    // }
-
-    // public function setEmailUser(user $emailUser): static
-    // {
-    //     $this->emailUser = $emailUser;
-
-    //     return $this;
-    // }
 }
