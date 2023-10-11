@@ -3,7 +3,7 @@
 {% block title %}Edit Produits{% endblock %}
 
 {% block body %}
-    <h1>Edit Produits</h1>
+    <h1>Modifier {{ produit.nomProduit}}</h1>
 
     {{ include('produits/_form.html.twig', {'button_label': 'Update'}) }}
 

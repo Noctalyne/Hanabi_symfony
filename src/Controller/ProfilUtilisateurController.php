@@ -3,14 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Clients;
+use App\Entity\User;
 use App\Form\ClientsType;
 use App\Repository\ClientsRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Id;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 // use Doctrine\ORM\Mapping\Id;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -21,6 +24,7 @@ class ProfilUtilisateurController extends AbstractController
     #[Route('/', name: 'app_profil_utilisateurs_index', methods: ['GET'])]
     public function index(ClientsRepository $clientsRepository): Response
     {
+
         return $this->render('profil_utilisateurs/index.html.twig', [
             'clients' => $clientsRepository->findAll(),
         ]);
@@ -46,21 +50,20 @@ class ProfilUtilisateurController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_profil_utilisateurs_show', methods: ['GET'])]
-    public function show(Clients $client): Response
+    #[Route('/{idClient}', name: 'app_profil_utilisateurs_show', methods: ['GET'])]
+    public function show(EntityManagerInterface $entityManager, int $idClient): Response
     {
-        // $client->getId();
-        // $client->getEmail();
-        // $client->getPassword();
-        // $client->getUsername();
-        
+        // Permet de retrouver le client + LES INFOS celon l'id 
+        $utilisateur = $entityManager->getRepository(User::class)->find($idClient);
+
         return $this->render('profil_utilisateurs/show.html.twig', [
-            'client' => $client,
-            var_dump($client),
+            // 'client' => $user,
+            'client' => $utilisateur,
+            var_dump($utilisateur),
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_profil_utilisateurs_edit', methods: ['GET', 'POST'])]
+    #[Route('/{idClient}/edit', name: 'app_profil_utilisateurs_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Clients $client, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ClientsType::class, $client);
@@ -78,7 +81,7 @@ class ProfilUtilisateurController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_profil_utilisateurs_delete', methods: ['POST'])]
+    #[Route('/{idClient}', name: 'app_profil_utilisateurs_delete', methods: ['POST'])]
     public function delete(Request $request, Clients $client, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $client->getId(), $request->request->get('_token'))) {

@@ -16,9 +16,6 @@ class Clients extends User /* */
 {
 
     /* VOIR SI BESOIN D' ID CAR RECUPERER DE USER GRACE A EXTEND */
-    // #[ORM\Column(nullable: false, name: 'idClient')]
-    // private ?int $idClient = null;
-
 /**
      * @var integer
      *
@@ -26,12 +23,12 @@ class Clients extends User /* */
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $idClient;
 
 
     /**
-        *@ORM\OneToOne(targetEntity: "User", inversedBy: "client")
-        *ORM\JoinColumn()
+        *@ORM\OneToOne(targetEntity: "User", inversedBy: "Clients")
+        *@ORM\JoinColumn()
      */
     protected $user;
 
@@ -76,12 +73,12 @@ class Clients extends User /* */
     public function getIdClient(): ?int
     {
 
-        return $this->id;
+        return $this->idClient;
     }
 
-    public function setIdClient(?int $id): static
+    public function setIdClient(?int $idClient): static
     {
-        $this->id = $id;
+        $this->idClient = $idClient;
 
         return $this;
     }

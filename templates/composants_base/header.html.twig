@@ -43,7 +43,7 @@
                     <div class="menu_connect">
                         <p>{{ app.user.username }}</p>
                         {# <img src={{ app.user.image }}  alt="Avatar" class="avatar" /> #}
-                        <a href="{{ path('app_profil_utilisateurs_show', {'id': app.user.id} ) }}"> Profil </a>
+                        <a href="{{ path('app_profil_utilisateurs_show', {'idClient': app.user.id} ) }}"> Profil </a>
 
                         <form method="post" action="{{ path('app_logout') }}">
                             <button type="submit" class="logout">Déconnexion</button>
