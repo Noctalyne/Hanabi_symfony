@@ -34,7 +34,6 @@ class RegistrationController extends AbstractController
                 $form->get('email')->getData()
             );
 
-
             //Modifie username de user ET client
             $user->setUsername(
                 $form->get('username')->getData()
@@ -42,8 +41,6 @@ class RegistrationController extends AbstractController
             $client->setUsername(
                 $form->get('username')->getData()
             );
-
-
 
             //Modifie username de user ET client + encode the plain password -> Encode le mot de passe
             $user->setPassword(
@@ -58,13 +55,12 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData() /* ('user')*/
                 )
             );
+            $client->setUser($user);
 
             // Enregistre l'entité user
             $entityManager->persist($user);            
             $entityManager->flush();// Enregistre les modifications dans la base de données
 
-            $idClient = $user->getId();
-            $client->setIdClient($idClient);
 
             //Enregistre l'entité Clients et pemet de s 'assure que l id de user = client
             $entityManager->persist($client);

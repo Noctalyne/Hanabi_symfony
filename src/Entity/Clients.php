@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\UserRepository;
 use App\Repository\ClientsRepository;
 // use Doctrine\Common\Collections\ArrayCollection;
 // use Doctrine\Common\Collections\Collection;
@@ -14,36 +15,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 class Clients extends User /* */
 {
-
-    /* VOIR SI BESOIN D' ID CAR RECUPERER DE USER GRACE A EXTEND */
-/**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $idClient;
-
-
-    /**
-        *@ORM\OneToOne(targetEntity: "User", inversedBy: "Clients")
-        *@ORM\JoinColumn()
-     */
-    protected $user;
-
-
-    public function getUser()
-    {
-        return $this->user;
-    }
-    public function setUser(User $user): static
-    {
-        $this->user = $user;
-        return $this;
-    }
-
-
     #[ORM\Column(length: 50, nullable: true, name: 'nom_client')]
     private ?string $nomClient = null;
 
@@ -54,10 +25,9 @@ class Clients extends User /* */
     #[ORM\Column(length: 10, nullable: true, name: "num_telephone")]
     private ?string $telephone = null;
 
-
-
-
-
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
     // #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: Adresses::class)]
     // #[ORM\Column(nullable: true, name: "adresse")]
@@ -68,21 +38,6 @@ class Clients extends User /* */
     // {
     //     $this->adresses =  new ArrayCollection();
     // }
-
-
-    public function getIdClient(): ?int
-    {
-
-        return $this->idClient;
-    }
-
-    public function setIdClient(?int $idClient): static
-    {
-        $this->idClient = $idClient;
-
-        return $this;
-    }
-
 
     public function getNomClient(): ?string
     {
@@ -116,6 +71,18 @@ class Clients extends User /* */
     public function setTelephone(string $telephone): static
     {
         $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

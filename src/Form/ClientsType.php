@@ -13,21 +13,17 @@ class ClientsType extends AbstractType
     {
         $builder
             // ->add('roles')
-
+            ->add('email')
             ->add('username')
             ->add('password')
             ->add('nomClient')
             ->add('prenomClient')
             ->add('telephone');
-        if ('email' === null ) {
-           $builder ->add('email');
-        }
-        else {
-            
-        }
-        // else{
-        //     {{}}
+        // if ('email' === null ) {
+        //    $builder 
         // }
+        // else {
+ 
     }
     public function configureOptions(OptionsResolver $resolver): void
     {

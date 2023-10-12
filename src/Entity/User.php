@@ -17,30 +17,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-
-    // Création de la colonne id
-    #[ORM\Column]
+    #[ORM\Column] // Création de la colonne id
     private ?int $id = null;
-
-   
-    // #[ORM\OneToOne(targetEntity:"Clients", mappedBy:"User")]
-    
-    /**
-    *@ORM\OneToOne(targetEntity:"Clients", mappedBy:"User") 
-     */
-    private $client;
-
-
-    public function getClient(){
-        return $this->client;
-    }
-
-    public function setClient(Clients $client) :static
-    {
-        $this->client = $client;
-        return $this;
-    }
-
 
     //Création de la colonne role
     #[ORM\Column(name: "user_role")] /* le name donne le nom de la colonne */
@@ -61,10 +39,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     // Création de la colonne password(codé de base)
     #[ORM\Column(length: 60, name: "user_password")] /* le name donne le nom de la colonne */
     protected ?string $password = null;
-
-
-
-
 
     public function getId(): ?int
     {
@@ -93,8 +67,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return (string) $this->email; // ici l user s identifier avec email voir si possible de mettre email + username
         // return (string) $this->username;
     }
-
-
 
     /**
      * @see UserInterface

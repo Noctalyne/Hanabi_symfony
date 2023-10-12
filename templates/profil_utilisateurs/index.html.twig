@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Liste des clients</h1>
 
-    {# <a href="{{ path('app_profil_utilisateurs_new') }}">Create new</a> #}
+    <a href="{{ path('app_profil_utilisateurs_new') }}">Create new</a>
 
     <table class="table">
         <thead>
@@ -25,13 +25,13 @@
         {% for client in clients %}
             <tr>
                 <td>{{ client.id }}</td>
-                <td>{{ client.roles ? client.roles|json_encode : '' }}</td>
+                <td>{{ client.user_role ? client.user_role|json_encode : '' }}</td>
                 <td>{{ client.email }}</td>
                 <td>{{ client.username }}</td>
-                <td>{{ client.password }}</td>
-                <td>{{ client.nomClient }}</td>
-                <td>{{ client.prenomClient }}</td>
-                <td>{{ client.telephone }}</td>
+                <td>{{ client.user_password }}</td>
+                <td>{{ client.nom_client }}</td>
+                <td>{{ client.prenom_client }}</td>
+                <td>{{ client.num_telephone }}</td>
                 <td>
                     <a href="{{ path('app_profil_utilisateurs_show', {'idClient': client.id}) }}">Voir</a>
                     <a href="{{ path('app_profil_utilisateurs_edit', {'idClient': client.id}) }}">Modifier</a>

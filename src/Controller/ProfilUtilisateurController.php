@@ -6,6 +6,7 @@ use App\Entity\Clients;
 use App\Entity\User;
 use App\Form\ClientsType;
 use App\Repository\ClientsRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Id;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
@@ -24,9 +25,9 @@ class ProfilUtilisateurController extends AbstractController
     #[Route('/', name: 'app_profil_utilisateurs_index', methods: ['GET'])]
     public function index(ClientsRepository $clientsRepository): Response
     {
-
+        var_dump($clientsRepository->findAllWithUser());
         return $this->render('profil_utilisateurs/index.html.twig', [
-            'clients' => $clientsRepository->findAll(),
+            'clients' => $clientsRepository->findAllWithUser(),
         ]);
     }
 
@@ -51,15 +52,21 @@ class ProfilUtilisateurController extends AbstractController
     }
 
     #[Route('/{idClient}', name: 'app_profil_utilisateurs_show', methods: ['GET'])]
-    public function show(EntityManagerInterface $entityManager, int $idClient): Response
+    public function show(EntityManagerInterface $entityManager, int $idClient, ClientsRepository $clientsRepository): Response
     {
         // Permet de retrouver le client + LES INFOS celon l'id 
-        $utilisateur = $entityManager->getRepository(User::class)->find($idClient);
+        // $utilisateur = $entityManager->getRepository(User::class)->find($idClient);
+        // $utilisateur = $entityManager->getRepository(User::class)->find($idClient);
+
+
+        $test = $clientsRepository->findClientWithId();
 
         return $this->render('profil_utilisateurs/show.html.twig', [
             // 'client' => $user,
-            'client' => $utilisateur,
-            var_dump($utilisateur),
+            // 'client' => $utilisateur,
+            // var_dump($utilisateur),
+            'client' => $test,
+            var_dump($clientsRepository->findClientWithId()),
         ]);
     }
 
