@@ -5,46 +5,51 @@
 {% block body %}
     <h1>Client</h1>
 
-    <table class="table">
+    {# Ma fontion dans "findClientWithId" du repository me renvoie un tableau
+     donc pour y accéder je dois utiliser {{ client[0].id }} 
+     ici [0] correspondras tjr à l'utilisateur selectionner car 
+     ma requete ne renvoie qu' une ligne #}
+
+    <table class="table">  
         <tbody>
             <tr>
                 <th>Id</th>
-                <td>{{ client.id }}</td>
+                <td>{{ client[0].id }}</td>
             </tr>
             <tr>
                 <th>Roles</th>
-                <td>{{ client.roles ? client.roles|json_encode : '' }}</td>
+                {# <td>{{ client.roles ? client.roles|json_encode : '' }}</td> #}
             </tr>
             <tr>
                 <th>Email</th>
-                <td>{{ client.email }}</td>
+                <td>{{ client[0].email }}</td>
             </tr>
             <tr>
                 <th>Username</th>
-                <td>{{ client.username }}</td>
+                <td>{{ client[0].username }}</td>
             </tr>
             <tr>
                 <th>Password</th>
-                <td>{{ client.password }}</td>
+                <td>{{ client[0].user_password }}</td>
             </tr>
-            {# <tr>
+            <tr>
                 <th>NomClient</th>
-                <td>{{ client.nomClient }}</td>
+                <td>{{ client[0].nom_client }}</td>
             </tr>
             <tr>
                 <th>PrenomClient</th>
-                <td>{{ client.prenomClient }}</td>
+                <td>{{ client[0].prenom_client }}</td>
             </tr>
             <tr>
                 <th>Telephone</th>
-                <td>{{ client.telephone }}</td>
-            </tr> #}
+                <td>{{ client[0].num_telephone }}</td>
+            </tr>
         </tbody>
     </table>
 
     <a href="{{ path('app_profil_utilisateurs_index') }}">Retour</a>
 
-    {# <a href="{{ path('app_profil_utilisateurs_edit', {'id': client.id}) }}">Modifier</a> #}
+    <a href="{{ path('app_profil_utilisateurs_edit', {'idClient': client[0].id}) }}">Modifier</a>
 
-    {# {{ include('profil_utilisateurs/_delete_form.html.twig') }} #}
+    {{ include('profil_utilisateurs/_delete_form.html.twig') }}
 {% endblock %}

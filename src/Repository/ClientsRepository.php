@@ -38,7 +38,9 @@ class ClientsRepository extends ServiceEntityRepository
         return $resultSet->fetchAllAssociative();
     }
 
-    public function findClientWithId()
+
+    // Requete qui permet de trouver le client celon User et récupérer ses infos
+    public function findClientWithId($idClient)
     {
         $conn = $this->getEntityManager()->getConnection();
 
@@ -46,12 +48,12 @@ class ClientsRepository extends ServiceEntityRepository
             SELECT *
             FROM clients c
             INNER JOIN user u 
-            ON u.id = c.user_id
-            WHERE u.id= c.id
-
+            ON u.id =  c.user_id 
+            WHERE u.id= :idClient
             ';
+        $params = ['idClient' => $idClient]; // recupère la valeur de l'url
 
-        $resultSet = $conn->executeQuery($sql);
+        $resultSet = $conn->executeQuery($sql, $params);
 
         // returns un tableau de tableau SANS objet
         return $resultSet->fetchAllAssociative();
