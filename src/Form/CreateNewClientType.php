@@ -1,10 +1,16 @@
 <?php
 
+
+/* 
+    Se formulaire permet de crée un nouveaux client tous en créant un nouveau user 
+    Permet l'enregistrement dans les 2 tables --> mix avec registrationForm 
+    Permet de différencier le formulaire du site de celui pour les Administrateur
+*/
+
 namespace App\Form;
 
-// use App\Entity\Clients;
-use App\Entity\user;
-use Doctrine\DBAL\Types\Type;
+use App\Entity\User;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -15,16 +21,15 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class RegistrationFormType extends AbstractType
+class CreateNewClientType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
+        @$builder
 
             /* Ici avec add on ajouter les donnée demander 
-            au formulaire en back --> on afficher sur le twig les(register) 
+            au formulaire en back --> on afficher sur le twig 
             les info qu'on veux recevoir*/
-
 
             ->add('email', TextType::class, [
                 'mapped' => false
@@ -45,23 +50,34 @@ class RegistrationFormType extends AbstractType
                     new Length([
                         'min' => 6,
                         'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
+                        'max' => 4096,// max length allowed by Symfony for security reasons
                     ]),
                 ],
             ])
 
+            ->add('nom', TextType::class, [
+                'mapped' => false
+            ])
 
+            ->add('prenom', TextType::class, [
+                'mapped' => false
+            ])
 
-            ->add('agreeTerms', CheckboxType::class, [
+            ->add('telephone', TextType::class, [
                 'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
+
             ]);
+
+            // ->add('agreeTerms', CheckboxType::class, [
+            //     'mapped' => false,
+            //     'constraints' => [
+            //         new IsTrue([
+            //             'message' => 'You should agree to our terms.',
+            //         ]),
+            //     ],
+            // ]);
     }
+
 
     public function configureOptions(OptionsResolver $resolver): void
     {

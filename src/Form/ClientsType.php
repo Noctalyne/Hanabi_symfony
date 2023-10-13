@@ -30,7 +30,8 @@ class ClientsType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Clients::class,
-            'data_class1' => User::class,
+            // 'data_class' => User::class,
+
         ]);
     }
 }

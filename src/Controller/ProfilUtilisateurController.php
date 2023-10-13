@@ -5,7 +5,8 @@ namespace App\Controller;
 use App\Entity\Clients;
 use App\Entity\User;
 use App\Form\ClientsType;
-use App\Form\UserType;
+use App\Form\RegistrationFormType;
+use App\Form\CreateNewClientType;
 use App\Repository\ClientsRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -35,25 +36,85 @@ class ProfilUtilisateurController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_profil_utilisateurs_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $client = new Clients();
-        $form = $this->createForm(ClientsType::class, $client);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+    // Route pour ajouter un nouvelle utilisateur --> Version Administrateur (Quasi copie de "registration")
+    #[Route('/new', name: 'app_profil_utilisateurs_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+        $user = new User();
+        $client = new Clients();
+
+        $clientForm = $this->createForm(CreateNewClientType::class, $user);
+        $clientForm->handleRequest($request);
+
+        if ($clientForm->isSubmitted() && $clientForm->isValid()) {
+
+            //Modifie email de user ET client
+            $user->setEmail($clientForm->get('email')->getData());
+            $client->setEmail($clientForm->get('email')->getData());
+                
+
+            //Modifie username de user ET client
+            $user->setUsername($clientForm->get('username')->getData());
+            $client->setUsername($clientForm->get('username')->getData());
+                
+
+            //Modifie username de user ET client + encode the plain password -> Encode le mot de passe
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $clientForm->get('plainPassword')->getData() 
+                )
+            );
+            $client->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $client,
+                    $clientForm->get('plainPassword')->getData() 
+                )
+            );
+
+            // Envoie les info de user dans client 
+            $client->setUser($user);
+
+            // recupère les informations et les insère dans client
+            $client->setPrenomClient($clientForm->get('nom')->getData());
+            $client->setNomClient($clientForm->get('prenom')->getData());
+            $client->setTelephone($clientForm->get('telephone')->getData());
+
+            // Enregistre l'entité user
+            $entityManager->persist($user);
+            $entityManager->flush(); // Enregistre les modifications dans la base de données
+
+
+            //Enregistre l'entité Clients et pemet de s 'assure que l id de user = client
             $entityManager->persist($client);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_profil_utilisateurs_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('profil_utilisateurs/new.html.twig', [
-            'client' => $client,
-            'form' => $form,
+        return $this->render('profil_utilisateurs/_form.html.twig', [
+            'form' => $clientForm->createView(),
         ]);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     #[Route('/{idClient}', name: 'app_profil_utilisateurs_show', methods: ['GET'])]
     public function show(EntityManagerInterface $entityManager, int $idClient, ClientsRepository $clientsRepository): Response
@@ -71,16 +132,20 @@ class ProfilUtilisateurController extends AbstractController
     }
 
     #[Route('/{idClient}/edit', name: 'app_profil_utilisateurs_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Clients $client, EntityManagerInterface $entityManager,
-     int $idClient, ClientsRepository $clientsRepository, User $user
-     ): Response
-    {
+    public function edit(
+        Request $request,
+        Clients $client,
+        EntityManagerInterface $entityManager,
+        int $idClient,
+        ClientsRepository $clientsRepository,
+        User $user
+    ): Response {
 
 
         $clientForm = $this->createForm(ClientsType::class, $client);
         $clientForm->handleRequest($request);
 
-        $userForm=$this->createForm(UserType::class, $user);
+        $userForm = $this->createForm(CreateNewClientType::class, $user);
         $userForm->handleRequest($request);
 
         // $client = $clientsRepository->findClientWithId($idClient);
@@ -91,12 +156,12 @@ class ProfilUtilisateurController extends AbstractController
 
         echo "<pre>",
         var_dump($user);
-        echo"</pre>";
-        
+        echo "</pre>";
+
         // echo "<pre>",
         // var_dump($client);
         // echo"</pre>";
-        if ($clientForm->isSubmitted() && $clientForm->isValid() && $userForm->isSubmitted() && $userForm->isValid() )  {
+        if ($clientForm->isSubmitted() && $clientForm->isValid() && $userForm->isSubmitted() && $userForm->isValid()) {
             // $entityManager->persist($client[0]);
             // $entityManager->persist($client[0]);
             $entityManager->persist($user[0]);
