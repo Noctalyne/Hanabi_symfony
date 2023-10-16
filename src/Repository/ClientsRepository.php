@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Clients;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -59,6 +60,16 @@ class ClientsRepository extends ServiceEntityRepository
         return $resultSet->fetchAllAssociative();
     }
 
+    // public function test(): void
+    // {
+     
+    //     $user = findClientWithId($idClient)
+        
+        
+    //     // setUsername($username);
+    //     // $this->getEntityManager()->persist($user);
+    //     // $this->getEntityManager()->flush();
+    // }
 
 
     //    /**

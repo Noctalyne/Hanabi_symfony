@@ -39,6 +39,39 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
+    
+    public function upgradeUsername(string $username, string $user): void
+    {
+        if (!$user instanceof User) {
+            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $user::class));
+        }
+
+        $user->setUsername($username);
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+    }
+
+
+    public function findClientWithId($idClient)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT *
+            FROM clients c
+            INNER JOIN user u 
+            ON u.id =  c.user_id 
+            WHERE u.id= :idClient
+            ';
+        $params = ['idClient' => $idClient]; // recupère la valeur de l'url
+
+        $resultSet = $conn->executeQuery($sql, $params);
+
+        // returns un tableau de tableau SANS objet
+        return $resultSet->fetchAllAssociative();
+    }
+
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

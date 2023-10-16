@@ -9,6 +9,7 @@
 
 namespace App\Form;
 
+use App\Entity\Clients;
 use App\Entity\User;
 
 use Symfony\Component\Form\AbstractType;
@@ -21,7 +22,8 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class CreateNewClientType extends AbstractType
+//Voir pour renommer la classe car utiliser aussi pour modifier pas que crée
+class CreateNewClientType extends AbstractType 
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -31,9 +33,7 @@ class CreateNewClientType extends AbstractType
             au formulaire en back --> on afficher sur le twig 
             les info qu'on veux recevoir*/
 
-            ->add('email', TextType::class, [
-                'mapped' => false
-            ])
+            ->add('email')
 
 
             ->add('username')
@@ -54,19 +54,18 @@ class CreateNewClientType extends AbstractType
                     ]),
                 ],
             ])
+            
+            ;
 
-            ->add('nom', TextType::class, [
-                'mapped' => false
-            ])
+            // ->add('nom', TextType::class, [
+            //     'mapped' => false
+            // ])
 
-            ->add('prenom', TextType::class, [
-                'mapped' => false
-            ])
+            // ->add('nom_client')
 
-            ->add('telephone', TextType::class, [
-                'mapped' => false,
+            // ->add('prenom_client');
 
-            ]);
+            // ->add('num_telephone')
 
             // ->add('agreeTerms', CheckboxType::class, [
             //     'mapped' => false,
@@ -82,7 +81,7 @@ class CreateNewClientType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => user::class,
+            array('data_class' => user::class, Clients::class), // array permet de renvoyer la classe en tableau
         ]);
     }
 }

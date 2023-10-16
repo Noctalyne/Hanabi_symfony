@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
+use function PHPUnit\Framework\objectEquals;
 
 #[Route('/profil/utilisateurs')]
 class ProfilUtilisateurController extends AbstractController
@@ -27,7 +28,6 @@ class ProfilUtilisateurController extends AbstractController
     #[Route('/', name: 'app_profil_utilisateurs_index', methods: ['GET'])]
     public function index(ClientsRepository $clientsRepository): Response
     {
-
         // echo "<pre>",
         // var_dump($clientsRepository->findAllWithUser());
         // echo"</pre>";
@@ -52,24 +52,24 @@ class ProfilUtilisateurController extends AbstractController
             //Modifie email de user ET client
             $user->setEmail($clientForm->get('email')->getData());
             $client->setEmail($clientForm->get('email')->getData());
-                
+
 
             //Modifie username de user ET client
             $user->setUsername($clientForm->get('username')->getData());
             $client->setUsername($clientForm->get('username')->getData());
-                
+
 
             //Modifie username de user ET client + encode the plain password -> Encode le mot de passe
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
-                    $clientForm->get('plainPassword')->getData() 
+                    $clientForm->get('plainPassword')->getData()
                 )
             );
             $client->setPassword(
                 $userPasswordHasher->hashPassword(
                     $client,
-                    $clientForm->get('plainPassword')->getData() 
+                    $clientForm->get('plainPassword')->getData()
                 )
             );
 
@@ -98,85 +98,175 @@ class ProfilUtilisateurController extends AbstractController
         ]);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // Route pour voir le profil client --> voir pour utiliser sur profil utilisateur
     #[Route('/{idClient}', name: 'app_profil_utilisateurs_show', methods: ['GET'])]
-    public function show(EntityManagerInterface $entityManager, int $idClient, ClientsRepository $clientsRepository): Response
+    public function show(int $idClient, ClientsRepository $clientsRepository): Response //EntityManagerInterface $entityManager,
     {
         // Permet de retrouver le client + LES INFOS celon l'id  de l'url 
         $user = $clientsRepository->findClientWithId($idClient);
 
-        // echo "<pre>",
-        // var_dump($test);
-        // echo"</pre>";
         return $this->render('profil_utilisateurs/show.html.twig', [
             'client' => $user,
-            // var_dump($clientsRepository->findClientWithId()),
         ]);
     }
+
+
+
+
+
 
     #[Route('/{idClient}/edit', name: 'app_profil_utilisateurs_edit', methods: ['GET', 'POST'])]
     public function edit(
         Request $request,
-        Clients $client,
         EntityManagerInterface $entityManager,
         int $idClient,
+        User $user,
+        Clients $client,
         ClientsRepository $clientsRepository,
-        User $user
+        UserRepository $userRepository,
+        UserPasswordHasherInterface $userPasswordHasher
     ): Response {
-
-
         $clientForm = $this->createForm(ClientsType::class, $client);
         $clientForm->handleRequest($request);
 
-        $userForm = $this->createForm(CreateNewClientType::class, $user);
-        $userForm->handleRequest($request);
 
-        // $client = $clientsRepository->findClientWithId($idClient);
-        // $client = $client[0]; // --> permet à la variable de rentrer dans le tableau 
-
-        $user = $clientsRepository->findClientWithId($idClient);
+        $user = $userRepository->findClientWithId($idClient);
         $user = $user[0];
+
+        // $user = json_decode(json_encode($user), true);
 
         echo "<pre>",
         var_dump($user);
         echo "</pre>";
+        if ($clientForm->isSubmitted() && $clientForm->isValid()) {
+
+            // 1. Transformez l'objet User en un tableau
+            $user = json_decode(json_encode($user), true);
+
+            // 2. Mettez à jour les données dans le tableau
+            // $user['email'] = $clientForm->get('email')->getData();
+            // Mettez à jour d'autres propriétés au besoin
+
+            // 3. Transformez le tableau en un nouvel objet User
+            $newUser = new User();
+            // $newUser->setEmail($user['email']);
+            // Remarque : Vous devrez également définir les autres propriétés de l'objet User en fonction du tableau
+
+            // Enregistrez les modifications dans la base de données
+            $entityManager->persist($newUser);
+            $entityManager->flush();
+
+            echo "<pre>",
+            var_dump($user);
+            echo "</pre>";
+        }
+
+        // $user = $userRepository->findClientWithId($idClient);
+        // $user = $user[0];
+        // // $client =
+
+        // $userForm = $this->createForm(CreateNewClientType::class, $user);
+        // $userForm->handleRequest($request);      
+
+
+
+
+        // // $client = $entityManager->getRepository(Clients::class)->findBy($user);
+        // $client= $clientsRepository->findClientWithId($idClient);
+        // echo "<pre>",
+        // var_dump($user);
+        // echo "</pre>";
 
         // echo "<pre>",
         // var_dump($client);
         // echo"</pre>";
-        if ($clientForm->isSubmitted() && $clientForm->isValid() && $userForm->isSubmitted() && $userForm->isValid()) {
-            // $entityManager->persist($client[0]);
-            // $entityManager->persist($client[0]);
-            $entityManager->persist($user[0]);
-            $entityManager->flush();
 
-            return $this->redirectToRoute('app_profil_utilisateurs_show', [], Response::HTTP_SEE_OTHER);
-        }
+        // if ($clientForm->isSubmitted() && $clientForm->isValid() ) {
+
+        //     $newEmail = $userForm->get('email')->getData();
+
+        //     $user -> setEmail($newEmail);
+
+        // //Modifie email de user ET client
+        // $user->setEmail($userForm->get('email')->getData());
+        // $client->setEmail($userForm->get('email')->getData());
+
+        // // // //Modifie username de user ET client
+        // $user->setUsername($clientForm->get('username')->getData());
+        // $client->setUsername($clientForm->get('username')->getData());
+
+
+        // // //Modifie username de user ET client + encode the plain password -> Encode le mot de passe
+        // $user->setPassword(
+        //     $userPasswordHasher->hashPassword(
+        //         $user,
+        //         $clientForm->get('plainPassword')->getData()
+        //     )
+        // );
+
+
+        // $client->setPassword(
+        //     $userPasswordHasher->hashPassword(
+        //         $client,
+        //         $clientForm->get('plainPassword')->getData()
+        //     )
+        // );
+
+        // Envoie les info de user dans client 
+        // $user->setUser($client);
+        // $client->setUser($user);
+
+        // // Enregistre l'entité user
+        // $entityManager->persist($user);
+        // $entityManager->flush(); // Enregistre les modifications dans la base de données
+
+
+        // // recupère les informations et les insère dans client
+        // $client->setPrenomClient($clientForm->get('nom')->getData());
+        // $client->setNomClient($clientForm->get('prenom')->getData());
+        // $client->setTelephone($clientForm->get('telephone')->getData());
+
+
+
+
+        //Enregistre l'entité Clients et pemet de s 'assure que l id de user = client
+
+        // $entityManager->persist($client);
+        // $entityManager->flush();
+
+        // return $this->redirectToRoute('app_profil_utilisateurs_show', ['idClient' => $idClient], Response::HTTP_SEE_OTHER);
+
 
 
         return $this->render('profil_utilisateurs/edit.html.twig', [
-            'client' => $client,
+            'client' => $user,
             // var_dump($user[0]),
             'form' => $clientForm,
         ]);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     #[Route('/{idClient}', name: 'app_profil_utilisateurs_delete', methods: ['POST'])]
     public function delete(Request $request, Clients $client, EntityManagerInterface $entityManager): Response
