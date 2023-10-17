@@ -82,13 +82,13 @@ class CreateNewClientType extends AbstractType
 
             
             ->add('email', ClientsType::class, [
-                'data_class' => Clients::class,
+                // 'data_class' => Clients::class,
+            ])
+
+
+            ->add('email', RegistrationFormType::class, [
+                // 'data_class' => User::class,
             ]);
-
-
-            // ->add('email', RegistrationFormType::class, [
-            //     'data_class' => User::class,
-            // ]);
     }
 
 
