@@ -14,9 +14,9 @@ class ClientsType extends AbstractType
     {
         $builder
             // ->add('roles')
-            ->add('email') //, EmailType::class, ['required' => false]
-            ->add('username')
-            ->add('password')
+            // ->add('email') //, EmailType::class, ['required' => false]
+            // ->add('username')
+            // ->add('password')
             ->add('nomClient')
             ->add('prenomClient')
             ->add('telephone');

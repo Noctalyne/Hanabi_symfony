@@ -12,6 +12,10 @@ namespace App\Form;
 use App\Entity\Clients;
 use App\Entity\User;
 
+use App\Form\RegistrationFormType;
+use app\Form\ClientsType;
+
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -23,7 +27,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 //Voir pour renommer la classe car utiliser aussi pour modifier pas que crée
-class CreateNewClientType extends AbstractType 
+class CreateNewClientType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -33,29 +37,29 @@ class CreateNewClientType extends AbstractType
             au formulaire en back --> on afficher sur le twig 
             les info qu'on veux recevoir*/
 
-            ->add('email')
+            // ->add('email')
 
 
-            ->add('username')
+            // ->add('username')
 
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        'max' => 4096,// max length allowed by Symfony for security reasons
-                    ]),
-                ],
-            ])
-            
-            ;
+            // ->add('plainPassword', PasswordType::class, [
+            //     // instead of being set onto the object directly,
+            //     // this is read and encoded in the controller
+            //     'mapped' => false,
+            //     'attr' => ['autocomplete' => 'new-password'],
+            //     'constraints' => [
+            //         new NotBlank([
+            //             'message' => 'Please enter a password',
+            //         ]),
+            //         new Length([
+            //             'min' => 6,
+            //             'minMessage' => 'Your password should be at least {{ limit }} characters',
+            //             'max' => 4096,// max length allowed by Symfony for security reasons
+            //         ]),
+            //     ],
+            // ])
+            // ->add('nom')
+            // ;
 
             // ->add('nom', TextType::class, [
             //     'mapped' => false
@@ -75,13 +79,25 @@ class CreateNewClientType extends AbstractType
             //         ]),
             //     ],
             // ]);
+
+            
+            ->add('email', ClientsType::class, [
+                'data_class' => Clients::class,
+            ]);
+
+
+            // ->add('email', RegistrationFormType::class, [
+            //     'data_class' => User::class,
+            // ]);
     }
 
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            array('data_class' => user::class, Clients::class), // array permet de renvoyer la classe en tableau
+            array('data_class' => User::class, Clients::class), // array permet de renvoyer la classe en tableau
+            // 'data_class' => Clients::class, // array permet de renvoyer la classe en tableau
+
         ]);
     }
 }
