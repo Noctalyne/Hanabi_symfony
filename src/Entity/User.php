@@ -37,7 +37,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     // Création de la colonne password(codé de base)
-    #[ORM\Column(length: 60, name: "password")] /* le name donne le nom de la colonne */
+    #[ORM\Column(length: 60, name: "user_password")] /* le name donne le nom de la colonne */
     protected ?string $password = null;
 
     public function getId(): ?int
