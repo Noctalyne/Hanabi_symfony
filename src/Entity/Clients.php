@@ -22,7 +22,7 @@ class Clients extends User /* */
     private ?string $prenomClient = null;
 
     //Création colonne numéro télephone
-    #[ORM\Column(length: 10, nullable: true, name: "num_telephone")]
+    #[ORM\Column(length: 10, nullable: true, name: "telephone")]
     private ?string $telephone = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]

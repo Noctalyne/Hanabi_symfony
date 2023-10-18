@@ -4,15 +4,18 @@ namespace App\Controller;
 
 use App\Entity\Clients;
 use App\Entity\User;
+
 use App\Form\ClientsType;
 use App\Form\RegistrationFormType;
 use App\Form\CreateNewClientType;
+use App\Form\UserType;
 use App\Repository\ClientsRepository;
 use App\Repository\UserRepository;
+
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Id;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
-// use Doctrine\ORM\Mapping\Id;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,48 +45,51 @@ class ProfilUtilisateurController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $user = new User();
-        $client = new Clients();
+        $userForm = $this->createForm(UserType::class, $user);
+        $userForm->handleRequest($request);
 
-        $clientForm = $this->createForm(CreateNewClientType::class, $user);
+
+        $client = new Clients();
+        $clientForm = $this->createForm(ClientsType::class, $client) ;
         $clientForm->handleRequest($request);
 
-        if ($clientForm->isSubmitted() && $clientForm->isValid()) {
+        if ($userForm->isSubmitted() && $userForm->isValid() && $clientForm->isSubmitted() && $clientForm->isValid()) {
 
             //Modifie email de user ET client
-            $user->setEmail($clientForm->get('email')->getData());
-            $client->setEmail($clientForm->get('email')->getData());
+            // $user->setEmail($clientForm->get('email')->getData());
+            // $client->setEmail($clientForm->get('email')->getData());
 
 
             //Modifie username de user ET client
-            $user->setUsername($clientForm->get('username')->getData());
-            $client->setUsername($clientForm->get('username')->getData());
+            // $user->setUsername($clientForm->get('username')->getData());
+            // $client->setUsername($clientForm->get('username')->getData());
 
 
             //Modifie username de user ET client + encode the plain password -> Encode le mot de passe
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $clientForm->get('plainPassword')->getData()
-                )
-            );
-            $client->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $client,
-                    $clientForm->get('plainPassword')->getData()
-                )
-            );
+            // $user->setPassword(
+            //     $userPasswordHasher->hashPassword(
+            //         $user,
+            //         $clientForm->get('plainPassword')->getData()
+            //     )
+            // );
+            // $client->setPassword(
+            //     $userPasswordHasher->hashPassword(
+            //         $client,
+            //         $clientForm->get('plainPassword')->getData()
+            //     )
+            // );
 
             // Envoie les info de user dans client 
-            $client->setUser($user);
+            // $client->setUser($user);
 
             // recupère les informations et les insère dans client
-            $client->setPrenomClient($clientForm->get('nom')->getData());
-            $client->setNomClient($clientForm->get('prenom')->getData());
+            $client->setPrenomClient($clientForm->get('nom_client')->getData());
+            $client->setNomClient($clientForm->get('prenom_client')->getData());
             $client->setTelephone($clientForm->get('telephone')->getData());
 
             // Enregistre l'entité user
             $entityManager->persist($user);
-            $entityManager->flush(); // Enregistre les modifications dans la base de données
+            // $entityManager->flush(); // Enregistre les modifications dans la base de données
 
 
             //Enregistre l'entité Clients et pemet de s 'assure que l id de user = client
@@ -93,8 +99,13 @@ class ProfilUtilisateurController extends AbstractController
             return $this->redirectToRoute('app_profil_utilisateurs_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('profil_utilisateurs/_form.html.twig', [
-            'form' => $clientForm->createView(),
+        return $this->render('profil_utilisateurs/new.html.twig', [
+            // 'form' => $clientForm->createView(),
+            'user' => $user,
+            'client' => $client,
+            'userForm' => $userForm,
+            'clientForm' => $clientForm,
+
         ]);
     }
 

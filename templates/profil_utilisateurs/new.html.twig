@@ -5,7 +5,19 @@
 {% block body %}
     <h1>Ajouter un nouveaux client</h1>
     
-    {{ include('profil_utilisateurs/_form.html.twig') }}
+    {# {{ include('profil_utilisateurs/_form.html.twig') }} #}
+    
+    {{form_start(userForm)}}
+    {{ form_widget(userForm) }}
+
+    {{ form_start(clientForm) }}
+    {{ form_widget(clientForm) }}
+    
+    <button class="btn">{{ button_label|default('Update') }}</button>
+
+    {{ form_end(clientForm) }}
+    
+    {{ form_end(userForm) }}
 
     <a href="{{ path('app_profil_utilisateurs_index') }}">Retour</a>
 {% endblock %}
