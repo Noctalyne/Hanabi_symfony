@@ -12,14 +12,14 @@
 
     <table class="table">  
         <tbody>
-            <tr>
+            {# <tr>
                 <th>Id</th>
                 <td>{{ client[0].id }}</td>
             </tr>
             <tr>
                 <th>Roles</th>
-                {# <td>{{ client.roles ? client.roles|json_encode : '' }}</td> #}
-            </tr>
+                <td>{{ client.roles ? client.roles|json_encode : '' }}</td>
+            </tr> #}
             <tr>
                 <th>Email</th>
                 <td>{{ client[0].email }}</td>
@@ -30,7 +30,8 @@
             </tr>
             <tr>
                 <th>Password</th>
-                <td>{{ client[0].user_password }}</td>
+                {# <td>{{ client[0].user_password }}</td> #}
+                <td>*******</td> {# voir comment mettre l'affichage auto des ** #}
             </tr>
             <tr>
                 <th>NomClient</th>

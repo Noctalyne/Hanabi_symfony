@@ -5,30 +5,58 @@
 {% block body %}
     <h1>Modifier clients</h1>
 
-    {# {{ include('profil_utilisateurs/_form.html.twig', {'button_label': 'Update'}) }}   #}
-
     {{form_start(userForm)}}
+        <table>
+            <tbody>
 
-	{{ form_row(userForm.username, {
-        label: 'username'
-    }) }}
+                <tr>
+                    <th> Nom d'utilisateur : </th>
+                    <td>{{client.username}}</td>
+                    <td>{{ form_row(userForm.username,{label:'Modifier'})}}</td> {# {label: 'Mot de passe'} #}
+                </tr>
 
-	{{ form_row(userForm.email, {
-        label: 'Email'
-    }) }}
+                <tr>
+                    <th>Email : </th>
+                    <td>{{client.email}}</td>
+                    <td>{{ form_row(userForm.email, {label:'Modifier'}) }}</td>
+                </tr>
 
-	{{ form_row(userForm.plainPassword, {
-            label: 'Mot de passe'
-        }) }}
+                <tr>
+                    <th>Mot de passe :</th>
+                    <td>{{client.password}}</td>
+                    <td>{{ form_row(userForm.plainPassword, {label:'Modifier'}) }}</td>
+                </tr>
+                
+            {{ form_start(clientForm) }}
 
-    {{ form_start(clientForm) }}
-    {{ form_widget(clientForm) }}
+                <tr>
+                    <th>Nom </th>
+                    <td>{{client.nomClient}}</td>
+                    <td>{{ form_row(clientForm.nomClient, {label:'Modifier'}) }}</td>
+                </tr>
+
+                <tr>
+                    <th>Prenom</th>
+                    <td>{{client.prenomClient}}</td>
+                    <td>{{ form_row(clientForm.prenomClient, {label:'Modifier'}) }}</td>
+                </tr>
+
+                <tr>
+                    <th>Telephone</th>
+                    <td>{{client.telephone}}</td>
+                    <td>{{ form_row(clientForm.telephone, {label:'Modifier'}) }}</td>
+                </tr>
+
+            </tbody>
+        </table>
+     
+        {{ form_widget(userForm._token) }}
+        <button class="btn">{{ button_label|default('Update') }}</button>
     
-    <button class="btn">{{ button_label|default('Update') }}</button>
 
     {{ form_end(clientForm) }}
-    {{ form_end(userForm) }}
- 
+    {{ form_end(userForm) }}     
+
     <a href="{{ path('app_profil_utilisateurs_index') }}">Retour</a>
 
     {# {{ include('profil_utilisateurs/_delete_form.html.twig') }} #}

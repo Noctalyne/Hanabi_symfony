@@ -9,7 +9,7 @@ use App\Form\ClientsType;
 use App\Form\UserType;
 use App\Repository\ClientsRepository;
 use App\Repository\UserRepository;
-
+use Doctrine\Common\Collections\Expr\Value;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Id;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
@@ -51,7 +51,7 @@ class ProfilUtilisateurController extends AbstractController
         $clientForm->handleRequest($request);
 
         if ($userForm->isSubmitted() && $userForm->isValid() && $clientForm->isSubmitted() && $clientForm->isValid()) {
-            
+
             $client->setEmail($userForm->get('email')->getData()); //Ajoute email à client
             $client->setUsername($userForm->get('username')->getData()); //Ajoute username à  client
 
@@ -90,11 +90,15 @@ class ProfilUtilisateurController extends AbstractController
             // 'form' => $clientForm->createView(),
             'user' => $user,
             'client' => $client,
-            'userForm' => $userForm, 
-            'clientForm' => $clientForm, 
+            'userForm' => $userForm,
+            'clientForm' => $clientForm,
 
         ]);
     }
+
+
+
+
 
     // Route pour voir le profil client --> voir pour utiliser sur profil utilisateur
     #[Route('/{idClient}', name: 'app_profil_utilisateurs_show', methods: ['GET'])]
@@ -115,131 +119,136 @@ class ProfilUtilisateurController extends AbstractController
 
     #[Route('/{idClient}/edit', name: 'app_profil_utilisateurs_edit', methods: ['GET', 'POST'])]
     public function edit(
+        int $idClient,
+        // int $id,
         Request $request,
         EntityManagerInterface $entityManager,
-        int $idClient,
-        User $user,
-        Clients $client,
         ClientsRepository $clientsRepository,
-        UserRepository $userRepository,
-        UserPasswordHasherInterface $userPasswordHasher
+        Clients $client,
+        User $user,
+        UserRepository $userRepository
     ): Response {
+
+
         $clientForm = $this->createForm(ClientsType::class, $client);
         $clientForm->handleRequest($request);
 
 
-        $user = $userRepository->findClientWithId($idClient);
-        $user = $user[0];
-
-        // $user = json_decode(json_encode($user), true);
-
-        echo "<pre>",
-        var_dump($user);
-        echo "</pre>";
-        if ($clientForm->isSubmitted() && $clientForm->isValid()) {
-
-            // 1. Transformez l'objet User en un tableau
-            $user = json_decode(json_encode($user), true);
-
-            // 2. Mettez à jour les données dans le tableau
-            // $user['email'] = $clientForm->get('email')->getData();
-            // Mettez à jour d'autres propriétés au besoin
-
-            // 3. Transformez le tableau en un nouvel objet User
-            $newUser = new User();
-            // $newUser->setEmail($user['email']);
-            // Remarque : Vous devrez également définir les autres propriétés de l'objet User en fonction du tableau
-
-            // Enregistrez les modifications dans la base de données
-            $entityManager->persist($newUser);
-            $entityManager->flush();
-
-            echo "<pre>",
-            var_dump($user);
-            echo "</pre>";
-        }
-
-        // $user = $userRepository->findClientWithId($idClient);
-        // $user = $user[0];
-        // // $client =
-
-        // $userForm = $this->createForm(CreateNewClientType::class, $user);
-        // $userForm->handleRequest($request);      
+        $userForm = $this->createForm(UserType::class, $user);
+        $userForm->handleRequest($request);
 
 
+        $clientData = $clientsRepository->findClientWithId($idClient);
+        $client = [
+            "id" => $clientData[0]["id"],
+            "roles" => $clientData[0]["user_role"],
+            "email" => $clientData[0]["email"],
+            "username" => $clientData[0]["username"],
+            "password" => $clientData[0]["user_password"],
+            "nomClient" => $clientData[0]["nom_client"],
+            "prenomClient" => $clientData[0]["prenom_client"],
+            "telephone" => $clientData[0]["telephone"],
+        ];
 
-
-        // // $client = $entityManager->getRepository(Clients::class)->findBy($user);
-        // $client= $clientsRepository->findClientWithId($idClient);
         // echo "<pre>",
-        // var_dump($user);
+        // var_dump("Objet clientData"),
+        // var_dump($clientData);
         // echo "</pre>";
 
-        // echo "<pre>",
-        // var_dump($client);
-        // echo"</pre>";
 
-        // if ($clientForm->isSubmitted() && $clientForm->isValid() ) {
-
-        //     $newEmail = $userForm->get('email')->getData();
-
-        //     $user -> setEmail($newEmail);
-
-        // //Modifie email de user ET client
-        // $user->setEmail($userForm->get('email')->getData());
-        // $client->setEmail($userForm->get('email')->getData());
-
-        // // // //Modifie username de user ET client
-        // $user->setUsername($clientForm->get('username')->getData());
-        // $client->setUsername($clientForm->get('username')->getData());
+        $userData = $userRepository->findClientWithId($idClient); // retourne un array
+        $user = [
+            "id" => $userData[0]["id"],
+            "roles" => $userData[0]["user_role"],
+            "email" => $userData[0]["email"],
+            "username" => $userData[0]["username"],
+            "password" => $userData[0]["user_password"],
+            // "nomClient" => $userData[0]["nom_client"],
+            // "prenomClient" => $userData[0]["prenom_client"],
+            // "telephone" => $userData[0]["telephone"],
+        ];
 
 
-        // // //Modifie username de user ET client + encode the plain password -> Encode le mot de passe
-        // $user->setPassword(
-        //     $userPasswordHasher->hashPassword(
-        //         $user,
-        //         $clientForm->get('plainPassword')->getData()
-        //     )
-        // );
-
-
-        // $client->setPassword(
-        //     $userPasswordHasher->hashPassword(
-        //         $client,
-        //         $clientForm->get('plainPassword')->getData()
-        //     )
-        // );
-
-        // Envoie les info de user dans client 
-        // $user->setUser($client);
-        // $client->setUser($user);
-
-        // // Enregistre l'entité user
-        // $entityManager->persist($user);
-        // $entityManager->flush(); // Enregistre les modifications dans la base de données
-
-
-        // // recupère les informations et les insère dans client
-        // $client->setPrenomClient($clientForm->get('nom')->getData());
-        // $client->setNomClient($clientForm->get('prenom')->getData());
-        // $client->setTelephone($clientForm->get('telephone')->getData());
+        echo "<pre>",
+        var_dump("Objet user"),
+        var_dump($user);
+        echo "</pre>";
 
 
 
+        if ($userForm->isSubmitted() && $userForm->isValid() && $clientForm->isSubmitted() && $clientForm->isValid()) {
 
-        //Enregistre l'entité Clients et pemet de s 'assure que l id de user = client
+            // if ($clientData && $userData){
 
-        // $entityManager->persist($client);
-        // $entityManager->flush();
+            // $verifInfos= $userForm->get("email")->getData() ;
+            
 
-        // return $this->redirectToRoute('app_profil_utilisateurs_show', ['idClient' => $idClient], Response::HTTP_SEE_OTHER);
+            $userModif = [
+                // "email" => $userData[0]["email"],
+                "username" => $userData[0]["username"],
+                "plainPassword" => $userData[0]["user_password"],
+            ];
+
+            foreach ($userModif as $cle => $valeur ) {
+                $verif = $valeur ;
+                $verifFormUser= $userForm->get($cle)->getData();
+                if ( $verif !== $verifFormUser){
+                    // if()
+                    $userData[$cle] = $verifFormUser;
+                }
+            }
+            // var_dump("<pre>");
+            // var_dump($user);
+            // var_dump("</pre>");
 
 
+
+            $clientModif = [
+                "nomClient" => $clientData[0]["nom_client"],
+                "prenomClient" => $clientData[0]["prenom_client"],
+                "telephone" => $clientData[0]["telephone"],
+            ];
+
+            foreach ($clientModif as $cle => $valeur ) {
+                $verif = $valeur ;
+                $verifFormClient = $clientForm->get($cle)->getData();
+                if ( $verif === $verifFormClient ){
+                    $client[$cle] = $verifFormClient;
+                }
+            }
+
+            
+            $modifUser = $userRepository->findClient($idClient);
+            // var_dump($modifUser);
+            // $modifUser-> setUsername($clientModif["username"]);
+            // $modifUser-> setEmail($clientModif["email"]);
+            // $modifUser-> setPassword($clientModif["plainPassword"]); 
+
+            $modifClient =$entityManager->getRepository(Clients::class)->find($idClient);;
+            // $modifClient-> setNomClient($clientModif["nomClient"]);
+            // $modifClient-> setPrenomClient($clientModif["prenomClient"]);
+            // $modifClient-> setTelephone($clientModif["telephone"]);
+            // $modifClient-> setUser($modifUser);
+
+
+            // $entityManager->persist($client);
+            // $entityManager->persist($client);
+
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_profil_utilisateurs_show', ['idClient' => $idClient], Response::HTTP_SEE_OTHER);
+        }
 
         return $this->render('profil_utilisateurs/edit.html.twig', [
-            'client' => $user,
-            // var_dump($user[0]),
-            'form' => $clientForm,
+            'user' => $user,
+            'client' => $client,
+            'userForm' => $userForm,
+            'clientForm' => $clientForm,
+            var_dump("<pre>"),
+            
+            var_dump("</pre>"),
+
+            var_dump($client),
         ]);
     }
 
