@@ -5,19 +5,31 @@
 {% block body %}
     <h1>Ajouter un nouveaux client</h1>
     
-    {# {{ include('profil_utilisateurs/_form.html.twig') }} #}
-    
-    {{form_start(userForm)}}
-    {{ form_widget(userForm) }}
+    {{form_start(userForm)}}  {# début du formulaire pour la bdd User #}
 
-    {{ form_start(clientForm) }}
-    {{ form_widget(clientForm) }}
-    
-    <button class="btn">{{ button_label|default('Update') }}</button>
+	{{ form_row(userForm.username, {
+        label: 'username'
+    }) }}
 
-    {{ form_end(clientForm) }}
+	{{ form_row(userForm.email, {
+        label: 'email'
+    }) }}
+
+	{{ form_row(userForm.plainPassword, {
+            label: 'plainPassword'
+        }) }}
+
+
+    {{ form_start(clientForm) }} {# début form pour ajouter les donées à client #}
+    {{ form_widget(clientForm) }} {# widget qui génère automatiquement les information du form #}
     
-    {{ form_end(userForm) }}
+    {{ form_widget(userForm._token) }} {# widget intégrér qui gère les token pour la sécurité #}
+    
+    <button class="btn">{{ button_label|default('Crée client') }}</button>
+
+    {{ form_end(clientForm) }} {# fin du form client #}
+    
+    {{ form_end(userForm) }}  {# fin du form user  #}
 
     <a href="{{ path('app_profil_utilisateurs_index') }}">Retour</a>
 {% endblock %}

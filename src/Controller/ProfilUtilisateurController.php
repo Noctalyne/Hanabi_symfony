@@ -6,8 +6,6 @@ use App\Entity\Clients;
 use App\Entity\User;
 
 use App\Form\ClientsType;
-use App\Form\RegistrationFormType;
-use App\Form\CreateNewClientType;
 use App\Form\UserType;
 use App\Repository\ClientsRepository;
 use App\Repository\UserRepository;
@@ -48,51 +46,40 @@ class ProfilUtilisateurController extends AbstractController
         $userForm = $this->createForm(UserType::class, $user);
         $userForm->handleRequest($request);
 
-
         $client = new Clients();
-        $clientForm = $this->createForm(ClientsType::class, $client) ;
+        $clientForm = $this->createForm(ClientsType::class, $client);
         $clientForm->handleRequest($request);
 
         if ($userForm->isSubmitted() && $userForm->isValid() && $clientForm->isSubmitted() && $clientForm->isValid()) {
+            
+            $client->setEmail($userForm->get('email')->getData()); //Ajoute email à client
+            $client->setUsername($userForm->get('username')->getData()); //Ajoute username à  client
 
-            //Modifie email de user ET client
-            // $user->setEmail($clientForm->get('email')->getData());
-            // $client->setEmail($clientForm->get('email')->getData());
+            //Ajoute + encode le mot de passe de User et Client
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $userForm->get('plainPassword')->getData()
+                )
+            );
+            $client->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $client,
+                    $userForm->get('plainPassword')->getData()
+                )
+            );
 
-
-            //Modifie username de user ET client
-            // $user->setUsername($clientForm->get('username')->getData());
-            // $client->setUsername($clientForm->get('username')->getData());
-
-
-            //Modifie username de user ET client + encode the plain password -> Encode le mot de passe
-            // $user->setPassword(
-            //     $userPasswordHasher->hashPassword(
-            //         $user,
-            //         $clientForm->get('plainPassword')->getData()
-            //     )
-            // );
-            // $client->setPassword(
-            //     $userPasswordHasher->hashPassword(
-            //         $client,
-            //         $clientForm->get('plainPassword')->getData()
-            //     )
-            // );
-
-            // Envoie les info de user dans client 
-            // $client->setUser($user);
-
-            // recupère les informations et les insère dans client
+            // Ajoute les informations du deuxième formulaire
             $client->setPrenomClient($clientForm->get('nom_client')->getData());
             $client->setNomClient($clientForm->get('prenom_client')->getData());
             $client->setTelephone($clientForm->get('telephone')->getData());
 
-            // Enregistre l'entité user
+
             $entityManager->persist($user);
-            // $entityManager->flush(); // Enregistre les modifications dans la base de données
+            $entityManager->flush();
 
+            $client->setUser($user); // ajoute les données du user sur client
 
-            //Enregistre l'entité Clients et pemet de s 'assure que l id de user = client
             $entityManager->persist($client);
             $entityManager->flush();
 
@@ -103,8 +90,8 @@ class ProfilUtilisateurController extends AbstractController
             // 'form' => $clientForm->createView(),
             'user' => $user,
             'client' => $client,
-            'userForm' => $userForm,
-            'clientForm' => $clientForm,
+            'userForm' => $userForm, 
+            'clientForm' => $clientForm, 
 
         ]);
     }
