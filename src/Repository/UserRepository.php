@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Clients;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
@@ -39,7 +40,16 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
+    public function upgradeEmail(string $email, string $user): void
+    {
+        if (!$user instanceof User) {
+            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $user::class));
+        }
 
+        $user->setEmail($email);
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+    }
 
     public function upgradeUsername(string $username, string $user): void
     {
@@ -97,6 +107,50 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $client;
     }
 
+    public function findUser($idClient)
+    {
+        // créa query pour recup donnée
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = '
+            SELECT *
+            FROM clients c
+            INNER JOIN user u 
+            ON u.id =  c.user_id 
+            WHERE u.id= :idClient
+            ';
+        $params = ['idClient' => $idClient]; // recupère la valeur de l'url
+
+        $resultSet = $conn->executeQuery($sql, $params);
+
+        // Recup les donnée et les renvoie sous forme de tableau assoc
+        $test = $resultSet->fetchAllAssociative();
+
+
+        // $test['user_role'] = ['ROLE_USER'];
+        
+
+        //Crée un nouveau "user" et lui attribut les donné récupéré dans le tableau
+        $user = new User() ;
+        $user ->setId($idClient);
+        // $user->setRoles([$test[0]['user_role']]) ;
+        $user->setUsername($test[0]['username']) ;
+        $user->setEmail($test[0]['email']) ;
+        $user->setPassword($test[0]['user_password']) ;
+
+        //Crée un nouveau "clients" et lui attribut les donné récupéré dans le tableau -> permet de renvoyer un objet 
+        $client = new Clients();
+        $client->setUser($user);
+        $client->setId($idClient);
+        $client->setUsername($test[0]['username']) ;
+        $client->setEmail($test[0]['email']) ;
+        $client->setPassword($test[0]['user_password']) ;
+        $client->setNomClient($test[0]['nom_client']);
+        $client->setPrenomClient($test[0]['nom_client']);
+        $client->setTelephone($test[0]['telephone']); // Accéder à l'attribut ID
+        
+        return $user;
+    }
+
     //    /**
     //     * @return User[] Returns an array of User objects
     //     */
@@ -115,7 +169,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     //    public function findOneBySomeField($value): ?User
     //    {
     //        return $this->createQueryBuilder('u')
-    //            ->andWhere('u.exampleField = :val')
+    //            ->andWhere('u.user_id = :val')
     //            ->setParameter('val', $value)
     //            ->getQuery()
     //            ->getOneOrNullResult()

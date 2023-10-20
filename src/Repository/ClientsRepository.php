@@ -5,7 +5,11 @@ namespace App\Repository;
 use App\Entity\Clients;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
+
+
+
 
 /**
  * @extends ServiceEntityRepository<Clients>
@@ -60,16 +64,57 @@ class ClientsRepository extends ServiceEntityRepository
         return $resultSet->fetchAllAssociative();
     }
 
-    // public function test(): void
-    // {
-     
-    //     $user = findClientWithId($idClient)
+
+
+    
+    public function findClient($idClient)
+    {
+        // créa query pour recup donnée
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = '
+            SELECT *
+            FROM clients c
+            INNER JOIN user u 
+            ON u.id =  c.user_id 
+            WHERE u.id= :idClient
+            ';
+        $params = ['idClient' => $idClient]; // recupère la valeur de l'url
+
+        $resultSet = $conn->executeQuery($sql, $params);
+
+        // Recup les donnée et les renvoie sous forme de tableau assoc
+        $test = $resultSet->fetchAllAssociative();
+
+
+        // $test['user_role'] = ['ROLE_USER'];
         
+
+        //Crée un nouveau "user" et lui attribut les donné récupéré dans le tableau
+        $user = new User() ;
+        $user ->setId($idClient);
+        // $user->setRoles([$test[0]['user_role']]) ;
+        $user->setUsername($test[0]['username']) ;
+        $user->setEmail($test[0]['email']) ;
+        $user->setPassword($test[0]['user_password']) ;
+
+        $tel = $test[0]['telephone'];
+        //Crée un nouveau "clients" et lui attribut les donné récupéré dans le tableau -> permet de renvoyer un objet 
+        $client = new Clients();
+        $client->setUser($user);
+        $client->setId($idClient);
+        $client->setUsername($test[0]['username']) ;
+        $client->setEmail($test[0]['email']) ;
+        $client->setPassword($test[0]['user_password']) ;
+        $client->setNomClient($test[0]['nom_client']);
+        $client->setPrenomClient($test[0]['nom_client']);
+        $client->setTelephone($tel); 
         
-    //     // setUsername($username);
-    //     // $this->getEntityManager()->persist($user);
-    //     // $this->getEntityManager()->flush();
-    // }
+        return $client;
+    }
+
+
+
+
 
 
     //    /**
@@ -87,11 +132,14 @@ class ClientsRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Clients
+    //    public function findOneBySomeField($idCLient): ?Clients
     //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
+    //        return $this->createQueryBuilder('id')
+    //        ->select('id')
+    //        ->from(Clients::class, 'clients')
+    //        ->innerJoin(User::class ,'u' ,'u.id =  clients.user_id')
+    //            ->andWhere('u.id = :idclient')
+    //            ->setParameter('idclient', $idCLient)
     //            ->getQuery()
     //            ->getOneOrNullResult()
     //        ;

@@ -121,134 +121,80 @@ class ProfilUtilisateurController extends AbstractController
     public function edit(
         int $idClient,
         // int $id,
+        // #[MapEntity(id: 'idClient')]
+        // #[MapEntity]
+
         Request $request,
         EntityManagerInterface $entityManager,
         ClientsRepository $clientsRepository,
-        Clients $client,
-        User $user,
+        Clients $clients,
+        User $users,
         UserRepository $userRepository
     ): Response {
 
-
-        $clientForm = $this->createForm(ClientsType::class, $client);
+        $clientForm = $this->createForm(ClientsType::class, $clients);
         $clientForm->handleRequest($request);
 
-
-        $userForm = $this->createForm(UserType::class, $user);
+        $userForm = $this->createForm(UserType::class, $users);
         $userForm->handleRequest($request);
 
-
-        $clientData = $clientsRepository->findClientWithId($idClient);
-        $client = [
-            "id" => $clientData[0]["id"],
-            "roles" => $clientData[0]["user_role"],
-            "email" => $clientData[0]["email"],
-            "username" => $clientData[0]["username"],
-            "password" => $clientData[0]["user_password"],
-            "nomClient" => $clientData[0]["nom_client"],
-            "prenomClient" => $clientData[0]["prenom_client"],
-            "telephone" => $clientData[0]["telephone"],
-        ];
-
-        // echo "<pre>",
-        // var_dump("Objet clientData"),
-        // var_dump($clientData);
-        // echo "</pre>";
-
-
-        $userData = $userRepository->findClientWithId($idClient); // retourne un array
-        $user = [
-            "id" => $userData[0]["id"],
-            "roles" => $userData[0]["user_role"],
-            "email" => $userData[0]["email"],
-            "username" => $userData[0]["username"],
-            "password" => $userData[0]["user_password"],
-            // "nomClient" => $userData[0]["nom_client"],
-            // "prenomClient" => $userData[0]["prenom_client"],
-            // "telephone" => $userData[0]["telephone"],
-        ];
-
-
-        echo "<pre>",
-        var_dump("Objet user"),
-        var_dump($user);
-        echo "</pre>";
-
-
+        $client = $clientsRepository->findClient($idClient);
+        $user = $userRepository->findUser($idClient);
 
         if ($userForm->isSubmitted() && $userForm->isValid() && $clientForm->isSubmitted() && $clientForm->isValid()) {
 
-            // if ($clientData && $userData){
 
-            // $verifInfos= $userForm->get("email")->getData() ;
-            
-
-            $userModif = [
-                // "email" => $userData[0]["email"],
-                "username" => $userData[0]["username"],
-                "plainPassword" => $userData[0]["user_password"],
-            ];
-
-            foreach ($userModif as $cle => $valeur ) {
-                $verif = $valeur ;
-                $verifFormUser= $userForm->get($cle)->getData();
-                if ( $verif !== $verifFormUser){
-                    // if()
-                    $userData[$cle] = $verifFormUser;
-                }
-            }
-            // var_dump("<pre>");
-            // var_dump($user);
-            // var_dump("</pre>");
-
-
-
-            $clientModif = [
-                "nomClient" => $clientData[0]["nom_client"],
-                "prenomClient" => $clientData[0]["prenom_client"],
-                "telephone" => $clientData[0]["telephone"],
-            ];
-
-            foreach ($clientModif as $cle => $valeur ) {
-                $verif = $valeur ;
-                $verifFormClient = $clientForm->get($cle)->getData();
-                if ( $verif === $verifFormClient ){
-                    $client[$cle] = $verifFormClient;
+            foreach ($user as $cle => $valeur) {
+                $verifForm = $userForm->get($cle)->getData();
+                if ($valeur!== $verifForm) {
+                    $user.$cle = $verifForm;
                 }
             }
 
+
+            foreach ($client as $cle => $valeur) {
+                $verif = $valeur;
+                $verifFormUser = $userForm->get($cle)->getData();
+                if ($verif !== $verifFormUser) {
+                    $client.$cle = $verifFormUser;
+                }
+            }
+
+            // $entityManager->persist($client);
             
-            $modifUser = $userRepository->findClient($idClient);
-            // var_dump($modifUser);
-            // $modifUser-> setUsername($clientModif["username"]);
-            // $modifUser-> setEmail($clientModif["email"]);
-            // $modifUser-> setPassword($clientModif["plainPassword"]); 
+            
 
-            $modifClient =$entityManager->getRepository(Clients::class)->find($idClient);;
-            // $modifClient-> setNomClient($clientModif["nomClient"]);
-            // $modifClient-> setPrenomClient($clientModif["prenomClient"]);
-            // $modifClient-> setTelephone($clientModif["telephone"]);
-            // $modifClient-> setUser($modifUser);
+            // $user->setEmail($userForm->get('email')->getData() );
+            // $client->setUser($user);
 
+            // $client->setEmail($userForm->get('email')->getData() );
+            // var_dump("<pre>", $user, "</pre>");
+            // var_dump("<pre>", $client, "</pre>");
 
-            // $entityManager->persist($client);
-            // $entityManager->persist($client);
+            
+            $entityManager->persist($user);
+
+            $entityManager->persist($client);
 
             $entityManager->flush();
 
             return $this->redirectToRoute('app_profil_utilisateurs_show', ['idClient' => $idClient], Response::HTTP_SEE_OTHER);
         }
 
+
+        var_dump("<pre>", $user, "</pre>");
+        var_dump("<pre>", $client, "</pre>");
+        
+
         return $this->render('profil_utilisateurs/edit.html.twig', [
             'user' => $user,
             'client' => $client,
             'userForm' => $userForm,
             'clientForm' => $clientForm,
-            var_dump("<pre>"),
-            
-            var_dump("</pre>"),
 
-            var_dump($client),
+            // var_dump("<pre>"),
+            // var_dump($client),
+            // var_dump("</pre>"),            
         ]);
     }
 

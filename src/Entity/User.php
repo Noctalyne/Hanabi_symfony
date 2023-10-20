@@ -18,7 +18,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column] // Création de la colonne id
-    private ?int $id = null;
+    protected ?int $id = null;
 
     //Création de la colonne role
     #[ORM\Column(name: "user_role")] /* le name donne le nom de la colonne */
@@ -44,17 +44,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->id;
     }
+    public function setId($value): ?int
+    {
+        $this->id = $value;
+        return $value;
+    }
+
 
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    public function setEmail(string $email): static
+    public function setEmail(string $email): ?string
     {
         $this->email = $email;
 
-        return $this;
+        return $email;
     }
 
     /**

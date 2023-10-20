@@ -18,7 +18,8 @@
                 <tr>
                     <th>Email : </th>
                     <td>{{client.email}}</td>
-                    <td>{{ form_row(userForm.email, {label:'Modifier'}) }}</td>
+                    {# VOIR COMMENT MODIFIER L EMAIL EN BDD MALGRE LE UNIQKEY // style="display:none;"#}
+                    <td >{{ form_row(userForm.email, {label:'Modifier'}) }}</td> 
                 </tr>
 
                 <tr>

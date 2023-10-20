@@ -26,7 +26,7 @@ class Clients extends User /* */
     private ?string $telephone = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, name: "user_id")]
     private ?User $user = null;
 
     // #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: Adresses::class)]
@@ -68,7 +68,7 @@ class Clients extends User /* */
     {
         return $this->telephone;
     }
-    public function setTelephone(string $telephone): static
+    public function setTelephone(?string $telephone): self
     {
         $this->telephone = $telephone;
 
