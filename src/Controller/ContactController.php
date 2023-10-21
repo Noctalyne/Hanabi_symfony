@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\FormulaireDemandeProduit;
 use App\Form\DemandeFormType;
-use App\Form\FormulaireDemandeProduitType;
 use App\Repository\FormulaireDemandeProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -72,7 +71,7 @@ class ContactController extends AbstractController
     }
 
     // Afficher le formulaire celon son id 
-    #[Route('/{id}', name: 'app_formulaire_demande_show', methods: ['GET'])]
+    #[Route('/contact/Formulaire/Voir:{id}', name: 'app_formulaire_show', methods: ['GET'])]
     public function show(FormulaireDemandeProduit $formulaireDemandeProduit): Response
     {
         return $this->render('contact/formulaireShow.html.twig', [

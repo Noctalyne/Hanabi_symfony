@@ -22,18 +22,13 @@
 
             <tr>
                 <td>
-                    Réponse du vendeur :
+                    Réponse du vendeur : {# permet d'afficher le état de la demande  #}
                     {% if  formulaireDemande.reponseDemande is same as('attente')  %}
-                    <td><p>Demande en attente </p></td>   
-                                     
+                        Demande en attente   
                     {% else %}
-                    
-                    <td>{{ formulaireDemande.dateReponseForm ? formulaireDemande.dateReponseForm|date('d M Y à H:i') : ''}} </td>
-                    <td>{{ formulaireDemande.reponseDemande }}</td>
+                        {{ formulaireDemande.reponseDemande ? 'Accepter' : 'Refuser' }}
+                        le {{ formulaireDemande.dateReponseForm ? formulaireDemande.dateReponseForm|date('d M Y') : '' }}
                     {% endif %}
-                    
-                     {{ formulaireDemande.reponseDemande ? 'Accepter' : 'Refuser' }}
-                    le {{ formulaireDemande.dateReponseForm ? formulaireDemande.dateReponseForm|date('d M Y') : '' }}
                 </td>
             </tr>
 
