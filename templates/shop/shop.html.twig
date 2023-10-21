@@ -19,7 +19,7 @@
     <div class="mozaic_produits">
         {% for produit in produits %}
             <div class="carte_produit">
-                <img src="{{ asset('./images/produits/dbz_2.jpg')}}" alt=""> {# {{ produit.imgProduit }} #}
+                <img src="{{ asset('images/produits/' ~ produit.imgProduit) }}" alt="photo du produit :" ~ {{produit.nomProduit }}>
 
                 <div class="carte_corp_produit">
                     <h5 class="carte_nom_produit">{{ produit.nomProduit }}</h5>

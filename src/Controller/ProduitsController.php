@@ -7,9 +7,11 @@ use App\Form\ProduitsType;
 use App\Repository\ProduitsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/produits')]
 class ProduitsController extends AbstractController
@@ -23,13 +25,36 @@ class ProduitsController extends AbstractController
     }
 
     #[Route('/new', name: 'app_produits_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $produit = new Produits();
         $form = $this->createForm(ProduitsType::class, $produit);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $imageProduit = $form->get('imgProduit')->getData(); // On récupère les données qui composent l’image
+
+            if ($imageProduit) { // Si une image a bien été insérée (vu qu’elle n’est pas required, elle peut être vide)
+
+                $originalFilename = pathinfo($imageProduit->getClientOriginalName(), PATHINFO_FILENAME); // On prend le nom de base du fichier
+                
+                $safeFilename = $slugger->slug($originalFilename);// this is needed to safely include the file name as part of the URL
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageProduit->guessExtension(); // Tente de déplacer le fichier vers le répertoire définit plus tôt
+                
+                try {
+                    $imageProduit->move(
+                    $this->getParameter('produit_directory'),
+                    $newFilename
+                    );
+                } catch (FileException $e) {
+                    // Gérer le cas en cas d’exception levée (droits insuffisants, stockage insuffisant, ...)
+                }
+
+                $produit->setImgProduit($newFilename); // On redéfinit l’image de notre objet pour permettre l’enregistrement du bon nom d’image en BDD
+                
+            }
+
             $entityManager->persist($produit);
             $entityManager->flush();
 

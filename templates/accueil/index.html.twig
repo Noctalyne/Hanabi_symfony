@@ -20,7 +20,7 @@
     <div class="mozaic_accueil">
       {% for produit in produits %}
         <div class="carte_produit">
-          <img src="{{ asset('./images/produits/dbz_2.jpg')}}" alt="image produit ">
+          <img src="{{ asset('images/produits/' ~ produit.imgProduit) }}" alt="photo du produit :" ~ {{produit.nomProduit }}>
           <div class="carte_corp_produit">
             <h5 class="carte_nom_produit">{{ produit.nomProduit }}</h5>
             <div class="carte_foot">
@@ -41,7 +41,7 @@
 
       {% for produit in produits %}
         <div class="carte_produit">
-          <img src="{{ asset('./images/produits/dbz_2.jpg')}}" alt="image produit ">
+          <img src="{{ asset('images/produits/' ~ produit.imgProduit) }}" alt="photo du produit :" ~ {{produit.nomProduit }}>
           <div class="carte_corp_produit">
             <h5 class="carte_nom_produit">{{ produit.nomProduit }}</h5>
             <div class="carte_foot">

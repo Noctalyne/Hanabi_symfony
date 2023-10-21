@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Voir le formulaire {% endblock %}
+
+{% block body %}
+    <h1>FormulaireDemandeProduit</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Type de produit : {{ formulaireDemande.TypeProduit }}</td>
+            </tr>
+            <tr>
+                <td>Description du produit : {{ formulaireDemande.descriptionProduit }}</td>
+            </tr>
+            
+
+
+            <tr>
+                <td>Envoyer le : {{ formulaireDemande.dateEnvoieForm ? formulaireDemande.dateEnvoieForm|date('d M Y à H:i') : '' }}</td>
+            </tr>
+
+            <tr>
+                <td>
+                    Réponse du vendeur :
+                    {% if  formulaireDemande.reponseDemande is same as('attente')  %}
+                    <td><p>Demande en attente </p></td>   
+                                     
+                    {% else %}
+                    
+                    <td>{{ formulaireDemande.dateReponseForm ? formulaireDemande.dateReponseForm|date('d M Y à H:i') : ''}} </td>
+                    <td>{{ formulaireDemande.reponseDemande }}</td>
+                    {% endif %}
+                    
+                     {{ formulaireDemande.reponseDemande ? 'Accepter' : 'Refuser' }}
+                    le {{ formulaireDemande.dateReponseForm ? formulaireDemande.dateReponseForm|date('d M Y') : '' }}
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_contact_log') }}">Retour à la liste</a>
+
+
+{% endblock %}

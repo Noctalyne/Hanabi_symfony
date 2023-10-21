@@ -143,24 +143,29 @@ class ProfilUtilisateurController extends AbstractController
 
         if ($userForm->isSubmitted() && $userForm->isValid() && $clientForm->isSubmitted() && $clientForm->isValid()) {
 
+            $actuelMail = $user->getEmail() ;
 
-            foreach ($user as $cle => $valeur) {
-                $verifForm = $userForm->get($cle)->getData();
-                if ($valeur!== $verifForm) {
-                    $user.$cle = $verifForm;
-                }
+            $mail = $userForm->get('email')->getData();  
+            // foreach ($user as $cle => $valeur) {
+            //     $verifForm = $userForm->get($cle)->getData();
+            //     if ($valeur!== $verifForm) {
+            //         $user.$cle = $verifForm;
+            //     }
+            // }
+            if ($actuelMail !== $mail) {
+                $user->setEmail($mail);
             }
 
-
-            foreach ($client as $cle => $valeur) {
-                $verif = $valeur;
-                $verifFormUser = $userForm->get($cle)->getData();
-                if ($verif !== $verifFormUser) {
-                    $client.$cle = $verifFormUser;
-                }
-            }
+            // foreach ($client as $cle => $valeur) {
+            //     $verif = $valeur;
+            //     $verifFormUser = $userForm->get($cle)->getData();
+            //     if ($verif !== $verifFormUser) {
+            //         $client.$cle = $verifFormUser;
+            //     }
+            // }
 
             // $entityManager->persist($client);
+            
             
             
 
@@ -172,9 +177,9 @@ class ProfilUtilisateurController extends AbstractController
             // var_dump("<pre>", $client, "</pre>");
 
             
-            $entityManager->persist($user);
+            // $entityManager->persist($user);
 
-            $entityManager->persist($client);
+            // $entityManager->persist($client);
 
             $entityManager->flush();
 

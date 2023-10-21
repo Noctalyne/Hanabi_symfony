@@ -14,6 +14,12 @@ class AccueilController extends AbstractController
     {
         $produit=$produitsRepository->findAll(); // permet de récupérer les info produits
 
+        // if (extension_loaded('fileinfo')) {
+        //     echo "fileinfo extension is enabled.";
+        // } else {
+        //     echo "fileinfo extension is not enabled.";
+        // }
+        
         return $this->render('accueil/index.html.twig', [
             'controller_name' => 'AccueilController',
             'produits' => $produit,
