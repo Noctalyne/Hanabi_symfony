@@ -36,6 +36,9 @@ class Adresses
     #[ORM\Column(length: 30, name: 'pays_adresse')]
     private ?string $paysAdresse = null;
 
+    #[ORM\ManyToOne(inversedBy: 'adresses')]
+    private ?Clients $idClient = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,6 +124,18 @@ class Adresses
     public function setPaysAdresse(string $paysAdresse): static
     {
         $this->paysAdresse = $paysAdresse;
+
+        return $this;
+    }
+
+    public function getIdClient(): ?Clients
+    {
+        return $this->idClient;
+    }
+
+    public function setIdClient(?Clients $idClient): static
+    {
+        $this->idClient = $idClient;
 
         return $this;
     }

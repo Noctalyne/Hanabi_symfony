@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use App\Repository\ClientsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 // use Doctrine\Common\Collections\ArrayCollection;
 // use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -28,6 +30,21 @@ class Clients extends User /* */
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false, name: "user_id")]
     private ?User $user = null;
+
+    #[ORM\OneToOne(mappedBy: 'idClient', cascade: ['persist', 'remove'])]
+    private ?Panier $panier = null;
+
+    #[ORM\ManyToMany(targetEntity: Commandes::class, mappedBy: 'idClient')]
+    private Collection $commandes;
+
+    #[ORM\OneToMany(mappedBy: 'idClient', targetEntity: Adresses::class)]
+    private Collection $adresses;
+
+    public function __construct()
+    {
+        $this->commandes = new ArrayCollection();
+        $this->adresses = new ArrayCollection();
+    }
 
     // #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: Adresses::class)]
     // #[ORM\Column(nullable: true, name: "adresse")]
@@ -83,6 +100,80 @@ class Clients extends User /* */
     public function setUser(User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getPanier(): ?Panier
+    {
+        return $this->panier;
+    }
+
+    public function setPanier(Panier $panier): static
+    {
+        // set the owning side of the relation if necessary
+        if ($panier->getIdClient() !== $this) {
+            $panier->setIdClient($this);
+        }
+
+        $this->panier = $panier;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commandes>
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commandes $commande): static
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes->add($commande);
+            $commande->addIdClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commandes $commande): static
+    {
+        if ($this->commandes->removeElement($commande)) {
+            $commande->removeIdClient($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Adresses>
+     */
+    public function getAdresses(): Collection
+    {
+        return $this->adresses;
+    }
+
+    public function addAdress(Adresses $adress): static
+    {
+        if (!$this->adresses->contains($adress)) {
+            $this->adresses->add($adress);
+            $adress->setIdClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdress(Adresses $adress): static
+    {
+        if ($this->adresses->removeElement($adress)) {
+            // set the owning side to null (unless already changed)
+            if ($adress->getIdClient() === $this) {
+                $adress->setIdClient(null);
+            }
+        }
 
         return $this;
     }
