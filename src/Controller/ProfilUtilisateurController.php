@@ -7,6 +7,7 @@ use App\Entity\User;
 
 use App\Form\ClientsType;
 use App\Form\UserType;
+use App\Repository\AdressesRepository;
 use App\Repository\ClientsRepository;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Expr\Value;
@@ -70,8 +71,8 @@ class ProfilUtilisateurController extends AbstractController
             );
 
             // Ajoute les informations du deuxième formulaire
-            $client->setPrenomClient($clientForm->get('nom_client')->getData());
-            $client->setNomClient($clientForm->get('prenom_client')->getData());
+            $client->setPrenomClient($clientForm->get('nomClient')->getData());
+            $client->setNomClient($clientForm->get('prenomClient')->getData());
             $client->setTelephone($clientForm->get('telephone')->getData());
 
 
@@ -102,16 +103,18 @@ class ProfilUtilisateurController extends AbstractController
 
     // Route pour voir le profil client --> voir pour utiliser sur profil utilisateur
     #[Route('/{idClient}', name: 'app_profil_utilisateurs_show', methods: ['GET'])]
-    public function show(int $idClient, ClientsRepository $clientsRepository): Response //EntityManagerInterface $entityManager,
+    public function show(int $idClient, ClientsRepository $clientsRepository, AdressesRepository $adressesRepository): Response //EntityManagerInterface $entityManager,
     {
         // Permet de retrouver le client + LES INFOS celon l'id  de l'url 
         $user = $clientsRepository->findClientWithId($idClient);
+        $adresse = $adressesRepository->findAll();
 
         return $this->render('profil_utilisateurs/show.html.twig', [
             'client' => $user,
+            'adresses' => $adresse,
         ]);
     }
-
+    
 
 
 

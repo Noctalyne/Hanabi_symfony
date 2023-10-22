@@ -14,14 +14,14 @@ class Panier
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::ARRAY, nullable: true)]
+    #[ORM\Column(type: Types::JSON, nullable: true)]
     private ?array $listeProduits = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 6, scale: 2)]
     private ?string $prixTotal = null;
 
     #[ORM\OneToOne(inversedBy: 'panier', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false,  name: 'id_client')]
     private ?Clients $idClient = null;
 
     public function getId(): ?int

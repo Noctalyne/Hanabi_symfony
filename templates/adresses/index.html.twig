@@ -28,6 +28,7 @@
                 <td>{{ adress.villeAdresse }}</td>
                 <td>{{ adress.codePostpAdressse }}</td>
                 <td>{{ adress.paysAdresse }}</td>
+                {# <td>{{ adress.idClient.id}}</td> #}
                 <td>
                     <a href="{{ path('app_adresses_show', {'id': adress.id}) }}">show</a>
                     <a href="{{ path('app_adresses_edit', {'id': adress.id}) }}">edit</a>
@@ -41,5 +42,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_adresses_new') }}">Create new</a>
+    {# <a href="{{ path('app_adresses_new') }}">Create new</a> #}
 {% endblock %}

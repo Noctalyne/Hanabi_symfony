@@ -22,7 +22,7 @@ class PanierController extends AbstractController
         ]);
     }
 
-    #[Route('/panier/new', name: 'app_panier_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_panier_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $panier = new Panier();

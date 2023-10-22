@@ -48,9 +48,34 @@
         </tbody>
     </table>
 
-   
+    <table>
+        {% for adress in adresses %}
+            <tr>
+                <td>{{ adress.id }}</td>
+                <td>{{ adress.numAdresse }}</td>
+                <td>{{ adress.rueAdresse }}</td>
+                <td>{{ adress.complementAdresse }}</td>
+                <td>{{ adress.villeAdresse }}</td>
+                <td>{{ adress.codePostpAdressse }}</td>
+                <td>{{ adress.paysAdresse }}</td>
+                {# <td>{{ adress.id_client_id.id}}</td> #}
+                <td>
+                    <a href="{{ path('app_adresses_show', {'id': adress.id}) }}">show</a>
+                    <a href="{{ path('app_adresses_edit', {'id': adress.id}) }}">edit</a>
+                </td>
+            </tr>
+        {# {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr> #}
+        {% endfor %}
 
-    <a href="{{ path('app_adresses_index') }}">Mes adresses (test)</a>
+    </table>
+    
+    <a href="{{ path('app_mes_adresses_new', {'idClient': client[0].id}) }}">créer </a>
+
+
+    {# <a href="{{ path('app_mes_adresses_index', {'idClient': client[0].id}) }}">Mes adresses </a> #}
 
     <a href="{{ path('app_profil_utilisateurs_index') }}">Retour</a>
 

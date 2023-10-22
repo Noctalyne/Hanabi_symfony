@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
 #[ORM\Entity(repositoryClass: ClientsRepository::class)]
-// #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 
 class Clients extends User /* */
 {
@@ -34,10 +34,11 @@ class Clients extends User /* */
     #[ORM\OneToOne(mappedBy: 'idClient', cascade: ['persist', 'remove'])]
     private ?Panier $panier = null;
 
-    #[ORM\ManyToMany(targetEntity: Commandes::class, mappedBy: 'idClient')]
+    #[ORM\ManyToMany(targetEntity: Commandes::class, mappedBy: 'idClient', cascade: ['persist', 'remove'])]
     private Collection $commandes;
 
-    #[ORM\OneToMany(mappedBy: 'idClient', targetEntity: Adresses::class)]
+    #[ORM\OneToMany(mappedBy: 'idClient', targetEntity: Adresses::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false, name: 'adresse_client')]
     private Collection $adresses;
 
     public function __construct()
@@ -46,15 +47,7 @@ class Clients extends User /* */
         $this->adresses = new ArrayCollection();
     }
 
-    // #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: Adresses::class)]
-    // #[ORM\Column(nullable: true, name: "adresse")]
-    // private Collection $adresses;
 
-
-    // public function __construct()
-    // {
-    //     $this->adresses =  new ArrayCollection();
-    // }
 
     public function getNomClient(): ?string
     {
