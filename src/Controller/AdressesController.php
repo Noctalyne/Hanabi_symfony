@@ -6,6 +6,7 @@ use App\Entity\Adresses;
 use App\Form\AdressesType;
 use App\Repository\AdressesRepository;
 use App\Repository\ClientsRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,32 +49,37 @@ class AdressesController extends AbstractController
 //{idClient}/adresses/{id}
 
 #[Route('{idClient}/adresses/new', name: 'app_mes_adresses_new', methods: ['GET', 'POST'])]
-public function new(Request $request, EntityManagerInterface $entityManager, int $idClient, ClientsRepository $clientsRepository): Response
+public function new(Request $request, EntityManagerInterface $entityManager, int $idClient, UserRepository $userRepository , ClientsRepository $clientsRepository): Response
 {
     $adress = new Adresses();
     $form = $this->createForm(AdressesType::class, $adress);
     $form->handleRequest($request);
 
-    // $cli = $clientsRepository->findClient($idClient);
     $cli = $clientsRepository->findClient($idClient);
+    $email = $cli ->getEmail();
 
-    // $adr= $cli->getCommandes();
-
+    // $client = $entityManager->getRepository('App\Entity\Clients') ->findOneBy(['user_id'=> $idClient]);
     
+    // $client = $entityManager->getRepository('App\Entity\Clients')->find($idClient);
     $adresseClientId = $cli->getId();
 
-    // // var_dump("<pre>", $adresseClientId, "</pre>");
-    // $adress = $form->get('id_client')->getData();
-    //     $form->get('id_client')->setData($adresseClientId);
+    var_dump("<pre>", $adresseClientId, "</pre>");
+    // var_dump("<pre>", $client, "</pre>");
 
+    // $user = $userRepository->findClient($idClient);
+    $user = $cli->getUser();
+    
+    var_dump("<pre>", $user, "</pre>");
 
     if ($form->isSubmitted() && $form->isValid()) {
         
+        $user->setEmail($email);
     
 
         // $adress->getIdClient();
-        // $cli->addAdress($adress);
-        // $entityManager->persist($cli);
+        $cli->addAdress($adress);
+        
+        $entityManager->persist($cli);
         $entityManager->persist($adress);
         $entityManager->flush();
         

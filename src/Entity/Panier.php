@@ -21,8 +21,8 @@ class Panier
     private ?string $prixTotal = null;
 
     #[ORM\OneToOne(inversedBy: 'panier', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false,  name: 'id_client')]
-    private ?Clients $idClient = null;
+    #[ORM\JoinColumn(nullable: false,  name: 'idClientPannier')]
+    private ?Clients $idClientPannier = null;
 
     public function getId(): ?int
     {
@@ -55,12 +55,12 @@ class Panier
 
     public function getIdClient(): ?Clients
     {
-        return $this->idClient;
+        return $this->idClientPannier;
     }
 
     public function setIdClient(Clients $idClient): static
     {
-        $this->idClient = $idClient;
+        $this->idClientPannier = $idClient;
 
         return $this;
     }

@@ -31,13 +31,13 @@ class Clients extends User /* */
     #[ORM\JoinColumn(nullable: false, name: "user_id")]
     private ?User $user = null;
 
-    #[ORM\OneToOne(mappedBy: 'idClient', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'idClientPannier', cascade: ['persist', 'remove'])]
     private ?Panier $panier = null;
 
-    #[ORM\ManyToMany(targetEntity: Commandes::class, mappedBy: 'idClient', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToMany(targetEntity: Commandes::class, mappedBy: 'idClientCommande', cascade: ['persist', 'remove'])]
     private Collection $commandes;
 
-    #[ORM\OneToMany(mappedBy: 'idClient', targetEntity: Adresses::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'idClientAdresse', targetEntity: Adresses::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false, name: 'adresse_client')]
     private Collection $adresses;
 

@@ -37,8 +37,8 @@ class Adresses
     private ?string $paysAdresse = null;
 
     #[ORM\ManyToOne(inversedBy: 'adresses', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false, name: 'id_client')]
-    private ?Clients $idClient = null;
+    #[ORM\JoinColumn(nullable: false, name: 'idClientAdresse')]
+    private ?Clients $idClientAdresse = null;
 
     public function getId(): ?int
     {
@@ -131,12 +131,12 @@ class Adresses
 
     public function getIdClient(): ?Clients
     {
-        return $this->idClient;
+        return $this->idClientAdresse;
     }
 
     public function setIdClient(?Clients $idClient): static
     {
-        $this->idClient = $idClient;
+        $this->idClientAdresse = $idClient;
 
         return $this;
     }

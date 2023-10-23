@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20231022212328 extends AbstractMigration
+final class Version20231023085352 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -25,7 +25,7 @@ final class Version20231022212328 extends AbstractMigration
         $this->addSql('CREATE TABLE commandes (id INT AUTO_INCREMENT NOT NULL, date_commande DATETIME NOT NULL, liste_articles LONGTEXT NOT NULL COMMENT \'(DC2Type:array)\', montant_total NUMERIC(6, 2) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE commandes_clients (commandes_id INT NOT NULL, clients_id INT NOT NULL, INDEX IDX_C665A6248BF5C2E6 (commandes_id), INDEX IDX_C665A624AB014612 (clients_id), PRIMARY KEY(commandes_id, clients_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE formulaire_demande_produit (id INT AUTO_INCREMENT NOT NULL, type_produit VARCHAR(20) NOT NULL, description_produit VARCHAR(300) NOT NULL, date_envoie_form DATETIME NOT NULL, date_reponse_form DATETIME DEFAULT NULL, reponse_demande VARCHAR(10) DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE panier (id INT AUTO_INCREMENT NOT NULL, id_client_id INT NOT NULL, liste_produits JSON DEFAULT NULL, prix_total NUMERIC(6, 2) NOT NULL, UNIQUE INDEX UNIQ_24CC0DF299DED506 (id_client_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE panier (id INT AUTO_INCREMENT NOT NULL, id_client INT NOT NULL, liste_produits JSON DEFAULT NULL, prix_total NUMERIC(6, 2) NOT NULL, UNIQUE INDEX UNIQ_24CC0DF2E173B1B8 (id_client), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE produits (id INT AUTO_INCREMENT NOT NULL, nom_produit VARCHAR(50) NOT NULL, description_produit LONGTEXT DEFAULT NULL, img_produit VARCHAR(100) NOT NULL, prix_produit NUMERIC(6, 2) NOT NULL, quant_stock NUMERIC(3, 0) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, user_role JSON NOT NULL, email VARCHAR(50) NOT NULL, username VARCHAR(50) NOT NULL, user_password VARCHAR(60) NOT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE vendeurs (id INT AUTO_INCREMENT NOT NULL, user_role JSON NOT NULL, email VARCHAR(50) NOT NULL, username VARCHAR(50) NOT NULL, user_password VARCHAR(60) NOT NULL, UNIQUE INDEX UNIQ_2180DE3E7927C74 (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -34,7 +34,7 @@ final class Version20231022212328 extends AbstractMigration
         $this->addSql('ALTER TABLE clients ADD CONSTRAINT FK_C82E74A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE commandes_clients ADD CONSTRAINT FK_C665A6248BF5C2E6 FOREIGN KEY (commandes_id) REFERENCES commandes (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE commandes_clients ADD CONSTRAINT FK_C665A624AB014612 FOREIGN KEY (clients_id) REFERENCES clients (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE panier ADD CONSTRAINT FK_24CC0DF299DED506 FOREIGN KEY (id_client_id) REFERENCES clients (id)');
+        $this->addSql('ALTER TABLE panier ADD CONSTRAINT FK_24CC0DF2E173B1B8 FOREIGN KEY (id_client) REFERENCES clients (id)');
     }
 
     public function down(Schema $schema): void
@@ -44,7 +44,7 @@ final class Version20231022212328 extends AbstractMigration
         $this->addSql('ALTER TABLE clients DROP FOREIGN KEY FK_C82E74A76ED395');
         $this->addSql('ALTER TABLE commandes_clients DROP FOREIGN KEY FK_C665A6248BF5C2E6');
         $this->addSql('ALTER TABLE commandes_clients DROP FOREIGN KEY FK_C665A624AB014612');
-        $this->addSql('ALTER TABLE panier DROP FOREIGN KEY FK_24CC0DF299DED506');
+        $this->addSql('ALTER TABLE panier DROP FOREIGN KEY FK_24CC0DF2E173B1B8');
         $this->addSql('DROP TABLE adresses');
         $this->addSql('DROP TABLE clients');
         $this->addSql('DROP TABLE commandes');

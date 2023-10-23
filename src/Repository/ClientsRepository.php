@@ -70,46 +70,15 @@ class ClientsRepository extends ServiceEntityRepository
     public function findClient($idClient)
     {
         // créa query pour recup donnée
-        $conn = $this->getEntityManager()->getConnection();
-        $sql = '
-            SELECT *
-            FROM clients c
-            INNER JOIN user u 
-            ON u.id =  c.user_id 
-            WHERE u.id= :idClient
-            ';
-        $params = ['idClient' => $idClient]; // recupère la valeur de l'url
 
-        $resultSet = $conn->executeQuery($sql, $params);
+        return $this->createQueryBuilder('c')
+            ->innerJoin('c.user', 'u')
+            ->where('c.id = :idClient')
+            ->setParameter('idClient', $idClient)
+            ->getQuery()
+            ->getOneOrNullResult();
 
-        // Recup les donnée et les renvoie sous forme de tableau assoc
-        $test = $resultSet->fetchAllAssociative();
-
-
-        // $test['user_role'] = ['ROLE_USER'];
-        
-
-        //Crée un nouveau "user" et lui attribut les donné récupéré dans le tableau
-        $user = new User() ;
-        $user ->setId($idClient);
-        // $user->setRoles([$test[0]['user_role']]) ;
-        $user->setUsername($test[0]['username']) ;
-        $user->setEmail($test[0]['email']) ;
-        $user->setPassword($test[0]['user_password']) ;
-
-        $tel = $test[0]['telephone'];
-        //Crée un nouveau "clients" et lui attribut les donné récupéré dans le tableau -> permet de renvoyer un objet 
-        $client = new Clients();
-        $client->setUser($user);
-        $client->setId($idClient);
-        $client->setUsername($test[0]['username']) ;
-        $client->setEmail($test[0]['email']) ;
-        $client->setPassword($test[0]['user_password']) ;
-        $client->setNomClient($test[0]['nom_client']);
-        $client->setPrenomClient($test[0]['nom_client']);
-        $client->setTelephone($tel); 
-        
-        return $client;
+            // Recup les donnée et les renvoie sous forme de tableau assoc
     }
 
 

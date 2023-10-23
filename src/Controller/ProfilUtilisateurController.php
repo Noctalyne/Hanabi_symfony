@@ -180,9 +180,9 @@ class ProfilUtilisateurController extends AbstractController
             // var_dump("<pre>", $client, "</pre>");
 
             
-            // $entityManager->persist($user);
+            $entityManager->persist($user);
 
-            // $entityManager->persist($client);
+            $entityManager->persist($client);
 
             $entityManager->flush();
 
@@ -191,7 +191,7 @@ class ProfilUtilisateurController extends AbstractController
 
 
         var_dump("<pre>", $user, "</pre>");
-        var_dump("<pre>", $client, "</pre>");
+        // var_dump("<pre>", $client, "</pre>");
         
 
         return $this->render('profil_utilisateurs/edit.html.twig', [
