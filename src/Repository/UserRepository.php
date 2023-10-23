@@ -123,30 +123,29 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $resultSet = $conn->executeQuery($sql, $params);
 
         // Recup les donnée et les renvoie sous forme de tableau assoc
-        $test = $resultSet->fetchAllAssociative();
+        $test = $resultSet->fetchAssociative();
 
 
-        // $test['user_role'] = ['ROLE_USER'];
-        
 
         //Crée un nouveau "user" et lui attribut les donné récupéré dans le tableau
         $user = new User() ;
         $user ->setId($idClient);
         // $user->setRoles([$test[0]['user_role']]) ;
-        $user->setUsername($test[0]['username']) ;
-        $user->setEmail($test[0]['email']) ;
-        $user->setPassword($test[0]['user_password']) ;
+        $user->setUsername($test['username']) ;
+        $user->setEmail($test['email']) ;
+        $user->setPassword($test['password']) ;
+
 
         //Crée un nouveau "clients" et lui attribut les donné récupéré dans le tableau -> permet de renvoyer un objet 
         $client = new Clients();
         $client->setUser($user);
-        $client->setId($idClient);
-        $client->setUsername($test[0]['username']) ;
-        $client->setEmail($test[0]['email']) ;
-        $client->setPassword($test[0]['user_password']) ;
-        $client->setNomClient($test[0]['nom_client']);
-        $client->setPrenomClient($test[0]['nom_client']);
-        $client->setTelephone($test[0]['telephone']); // Accéder à l'attribut ID
+        // $client->setId($idClient);
+        // $client->setUsername($test[0]['username']) ;
+        // $client->setEmail($test[0]['email']) ;
+        // $client->setPassword($test[0]['user_password']) ;
+        // $client->setNomClient($test['nomClient']);
+        // $client->setPrenomClient($test['prenomClient']);
+        // $client->setTelephone($test['telephone']); // Accéder à l'attribut ID
         
         return $user;
     }

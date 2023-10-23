@@ -13,14 +13,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
 #[ORM\Entity(repositoryClass: ClientsRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+// #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 
 class Clients extends User /* */
 {
-    #[ORM\Column(length: 50, nullable: true, name: 'nom_client')]
+    #[ORM\Column(length: 50, nullable: true, name: 'nomClient')]
     private ?string $nomClient = null;
 
-    #[ORM\Column(length: 50, nullable: true, name: 'prenom_client')]
+    #[ORM\Column(length: 50, nullable: true, name: 'prenomClient')]
     private ?string $prenomClient = null;
 
     //Création colonne numéro télephone

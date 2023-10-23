@@ -123,16 +123,13 @@ class ProfilUtilisateurController extends AbstractController
     #[Route('/{idClient}/edit', name: 'app_profil_utilisateurs_edit', methods: ['GET', 'POST'])]
     public function edit(
         int $idClient,
-        // int $id,
-        // #[MapEntity(id: 'idClient')]
-        // #[MapEntity]
-
         Request $request,
         EntityManagerInterface $entityManager,
         ClientsRepository $clientsRepository,
         Clients $clients,
         User $users,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        UserPasswordHasherInterface $userPasswordHasher
     ): Response {
 
         $clientForm = $this->createForm(ClientsType::class, $clients);
@@ -141,23 +138,33 @@ class ProfilUtilisateurController extends AbstractController
         $userForm = $this->createForm(UserType::class, $users);
         $userForm->handleRequest($request);
 
+        // $client = $clientsRepository->findClient($idClient);
         $client = $clientsRepository->findClient($idClient);
+
         $user = $userRepository->findUser($idClient);
+
+        // var_dump("<pre>", $user, "</pre>");
+        
+
+        // var_dump("<pre>", $client, "</pre>");
+        // var_dump("<pre>", $user, "</pre>");
+
 
         if ($userForm->isSubmitted() && $userForm->isValid() && $clientForm->isSubmitted() && $clientForm->isValid()) {
 
-            $actuelMail = $user->getEmail() ;
+            
 
-            $mail = $userForm->get('email')->getData();  
+            // $mail = $userForm->get('email')->getData(); 
+
             // foreach ($user as $cle => $valeur) {
             //     $verifForm = $userForm->get($cle)->getData();
             //     if ($valeur!== $verifForm) {
             //         $user.$cle = $verifForm;
             //     }
             // }
-            if ($actuelMail !== $mail) {
-                $user->setEmail($mail);
-            }
+            // if ($actuelMail !== $mail) {
+            //     $client->setEmail($mail);
+            // }
 
             // foreach ($client as $cle => $valeur) {
             //     $verif = $valeur;
@@ -169,18 +176,34 @@ class ProfilUtilisateurController extends AbstractController
 
             // $entityManager->persist($client);
             
+            $user ->setUsername( $userForm->get('username')->getData());
+            $user -> setEmail( $userForm->get('email')->getData());
+
+            $user -> setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $userForm->get('plainPassword')->getData())
+                );
+                
             
+ $entityManager->persist($user);
+
+            $client ->setUsername( $userForm->get('username')->getData()) ;
+            $client-> setEmail( $userForm->get('email')->getData()) ;
+            $client-> setPassword(
+                $userPasswordHasher->hashPassword(
+                    $client,
+                    $userForm->get('plainPassword')->getData())
+            );
+
+            $client-> setNomClient( $clientForm->get('nomClient')->getData());
+            $client-> setPrenomClient( $clientForm->get('prenomClient')->getData());
+            $client-> setTelephone( $clientForm->get('telephone')->getData());
+            $client->setUser($user);
+            var_dump("<pre>", $client, "</pre>");
             
 
-            // $user->setEmail($userForm->get('email')->getData() );
-            // $client->setUser($user);
-
-            // $client->setEmail($userForm->get('email')->getData() );
-            // var_dump("<pre>", $user, "</pre>");
-            // var_dump("<pre>", $client, "</pre>");
-
-            
-            $entityManager->persist($user);
+            //
 
             $entityManager->persist($client);
 
@@ -190,7 +213,7 @@ class ProfilUtilisateurController extends AbstractController
         }
 
 
-        var_dump("<pre>", $user, "</pre>");
+        // var_dump("<pre>", $user, "</pre>");
         // var_dump("<pre>", $client, "</pre>");
         
 

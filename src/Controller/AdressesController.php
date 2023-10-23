@@ -29,16 +29,16 @@ class AdressesController extends AbstractController
         $cli = $clientsRepository->findClient($idClient);
 
         // $cli ->getAdresses();
-        $userr = $cli->getUser();
-        $adresse = $cli->getAdresses();
+        // $userr = $cli->getUser();
+        // $adresse = $cli->getAdresses();
 
-        echo "<pre>",
-        var_dump($adresse);
-        echo"</pre>";
+        // echo "<pre>",
+        // var_dump($adresse);
+        // echo"</pre>";
         return $this->render('adresses/index.html.twig', [
             // 'adresses' => $adressesRepository->findAdresseByClient($idClient) // permet de retrouver le client par l
             // 'client' =>$client,
-            'adresses' => $adresse,
+            // 'adresses' => $adresse,
             'client' => $cli,
 
         ]);
@@ -56,30 +56,30 @@ public function new(Request $request, EntityManagerInterface $entityManager, int
     $form->handleRequest($request);
 
     $cli = $clientsRepository->findClient($idClient);
-    $email = $cli ->getEmail();
+    // $email = $cli ->getEmail();
 
     // $client = $entityManager->getRepository('App\Entity\Clients') ->findOneBy(['user_id'=> $idClient]);
     
     // $client = $entityManager->getRepository('App\Entity\Clients')->find($idClient);
-    $adresseClientId = $cli->getId();
+    // $adresseClientId = $cli->getId();
 
-    var_dump("<pre>", $adresseClientId, "</pre>");
+    // var_dump("<pre>", $adresseClientId, "</pre>");
     // var_dump("<pre>", $client, "</pre>");
 
     // $user = $userRepository->findClient($idClient);
-    $user = $cli->getUser();
+    // $user = $cli->getUser();
     
-    var_dump("<pre>", $user, "</pre>");
+    // var_dump("<pre>", $user, "</pre>");
 
     if ($form->isSubmitted() && $form->isValid()) {
         
-        $user->setEmail($email);
+        // $user->setEmail($email);
     
 
         // $adress->getIdClient();
-        $cli->addAdress($adress);
+        // $cli->addAdress($adress);
         
-        $entityManager->persist($cli);
+        // $entityManager->persist($cli);
         $entityManager->persist($adress);
         $entityManager->flush();
         

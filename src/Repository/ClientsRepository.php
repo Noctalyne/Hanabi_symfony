@@ -64,25 +64,64 @@ class ClientsRepository extends ServiceEntityRepository
         return $resultSet->fetchAllAssociative();
     }
 
-
-
-    
     public function findClient($idClient)
     {
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT * 
+            FROM `clients` as c
+            INNER JOIN `user` as u
+            ON u.id =  c.user_id 
+            WHERE u.id = :idClient
+            ';
+        $params = ['idClient' => $idClient]; // recupère la valeur de l'url
+
+        $resultSet = $conn->executeQuery($sql, $params);
+
+
+        $test = $resultSet->fetchAssociative();
+
+        $user = new User() ;
+        $user ->setId($idClient);
+        // $user->setRoles([$test[0]['user_role']]) ;
+        $user->setUsername($test['username']) ;
+        $user->setEmail($test['email']) ;
+        $user->setPassword($test['password']) ;
+
+
+        //Crée un nouveau "clients" et lui attribut les donné récupéré dans le tableau -> permet de renvoyer un objet 
+        $client = new Clients();
+        $client->setUser($user);
+        $client->setId($idClient);
+        $client->setUsername($test['username']) ;
+        $client->setEmail($test['email']) ;
+        $client->setPassword($test['password']) ;
+        $client->setNomClient($test['nomClient']);
+        $client->setPrenomClient($test['prenomClient']);
+        $client->setTelephone($test['telephone']); // Accéder à l'attribut ID
+        
+        return $client;
+        // returns un tableau de tableau SANS objet
+
+
         // créa query pour recup donnée
 
-        return $this->createQueryBuilder('c')
-            ->innerJoin('c.user', 'u')
-            ->where('c.id = :idClient')
-            ->setParameter('idClient', $idClient)
-            ->getQuery()
-            ->getOneOrNullResult();
+        // return $this->createQueryBuilder('c')
+        //     ->select('*')
+        //     ->from( 'clients', 'c')
+        //     ->innerJoin('user', 'u')
+        //     ->where('u.id = :idClient')
+        //     ->setParameter('idClient', $idClient)
+        //     ->getQuery()
+        //     ->getOneOrNullResult();
 
-            // Recup les donnée et les renvoie sous forme de tableau assoc
+        // Recup les donnée et les renvoie sous forme de tableau assoc
     }
 
 
-
+    //n7, c1_.user_id AS user_id_8 FROM clients c1_ INNER JOIN user u2_ ON c1_.user_id = u2_.id WHERE u2_.id 
 
 
 
