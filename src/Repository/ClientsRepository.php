@@ -83,17 +83,17 @@ class ClientsRepository extends ServiceEntityRepository
 
         $test = $resultSet->fetchAssociative();
 
-        $user = new User() ;
-        $user ->setId($idClient);
+        // $user = new User() ;
+        // $user ->setId($idClient);
         // $user->setRoles([$test[0]['user_role']]) ;
-        $user->setUsername($test['username']) ;
-        $user->setEmail($test['email']) ;
-        $user->setPassword($test['password']) ;
+        // $user->setUsername($test['username']) ;
+        // $user->setEmail($test['email']) ;
+        // $user->setPassword($test['password']) ;
 
 
         //Crée un nouveau "clients" et lui attribut les donné récupéré dans le tableau -> permet de renvoyer un objet 
         $client = new Clients();
-        $client->setUser($user);
+        // $client->setUser($user);
         $client->setId($idClient);
         $client->setUsername($test['username']) ;
         $client->setEmail($test['email']) ;

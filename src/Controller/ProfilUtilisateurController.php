@@ -142,7 +142,6 @@ class ProfilUtilisateurController extends AbstractController
         $client = $clientsRepository->findClient($idClient);
 
         $user = $userRepository->findUser($idClient);
-
         // var_dump("<pre>", $user, "</pre>");
         
 
